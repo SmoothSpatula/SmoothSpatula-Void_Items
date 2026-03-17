@@ -1,11 +1,9 @@
 -- Will-o'-the-Wisp -> Voidsent Flame -> Upon hitting an enemy at full health, spawn a lava pillar in a 12m (+2.4m per stack) radius for 260% (+156% per stack) base damage.
 local item = Item.new("voidsentFlames")
-local object = Object.new("voidesentFlamesEf")
 
 -- ===== Assets =====
 
 local sprite = Sprite.new("item/ration", "~/assets/sprites/items/ration.png", 1, 16, 16)
-local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/effects/voidFlamesEffect1.png", 9, 32, 32)
 
 -- https://bdragon1727.itch.io
 
@@ -13,9 +11,6 @@ local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/ef
 
 item:set_sprite(sprite)
 item:set_tier(ItemTier.COMMON)
-
-object:set_sprite(sprite_effect)
-object:set_depth(-1)
 
 -- ===== Callbacks =====
 
