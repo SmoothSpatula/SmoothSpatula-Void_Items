@@ -23,7 +23,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
     if count <= 0 or target.hp < target.maxhp then return end
     local size = 96 + 12*(count-1)
-    attacker:fire_explosion(target.x, target.y, attacker.damage * 1.04 + 1.56*count, size, size, sprite_effect, nil, 0)
+    attacker:fire_explosion(target.x, target.y, attacker.damage * 1.04 + 1.56*count, size, size, sprite_effect, nil, false)
 
     -- play animation and sound wooo
 end)

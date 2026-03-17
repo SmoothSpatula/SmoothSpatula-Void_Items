@@ -18,9 +18,10 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     if stack <= 0 or attacker.shield <= 0 then return end
     
     missile = Instance.create(attacker.x, attacker.y, gm.constants.oEfMissile)
+    missile.speed = 15
     missile.damage = attacker.damage * 0.4 * stack
-    missile.image_xscale = 1.5 + 0.05 * stack
-    missile.image_yscale = 1.5 + 0.05 * stack
+    missile.image_xscale = 1
+    missile.image_yscale = 1
 
     -- play animation and sound wooo
 end)
