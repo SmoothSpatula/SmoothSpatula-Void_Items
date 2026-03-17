@@ -1,0 +1,11 @@
+﻿{
+	"name": "Void_Items",
+	"version_number": "0.1.0",
+	"website_url": "https://github.com/Klehrik/RoRR-Lost_in_Orbit",
+	"description": "Content expansion mod adding new items.",
+	"dependencies": [
+		"ReturnOfModding-ReturnOfModding-1.1.16",
+		"ReturnsAPI-ReturnsAPI-0.1.47",
+		"LuaENVY-ENVY-1.2.0"
+	]
+}
