@@ -5,7 +5,7 @@ local object = Object.new("voidesentFlamesEf")
 -- ===== Assets =====
 
 local sprite = Sprite.new("item/ration", "~/assets/sprites/items/ration.png", 1, 16, 16)
-local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/effects/voidsentFlames.png", 13, 32, 32)
+local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/effects/voidFlamesEffect1.png", 9, 32, 32)
 
 -- https://bdragon1727.itch.io
 
@@ -22,23 +22,8 @@ object:set_depth(-1)
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
     if count <= 0 or target.hp < target.maxhp then return end
-    local height = 192 + 24 * (count-1)
-    local flames = object:create(target.x, target.y - height/1.8 + 30)
-    flames.image_yscale = 3 + count * 0.4
-    flames.image_xscale = 3
-    local inst_data = Instance.get_data(flames)
-    inst_data.target = target
-    attacker:fire_explosion(target.x, target.y, 64, height, 2.4 + 1.56 * (count-1), nil, nil, 0)
+    local size = 96 + 12*(count-1)
+    attacker:fire_explosion(target.x, target.y, attacker.damage * 1.04 + 1.56*count, size, size, sprite_effect, nil, 0)
 
     -- play animation and sound wooo
-end)
-
-Callback.add(object.on_create, function(inst)
-    inst.image_speed = 0.2
-end)
-
-Callback.add(object.on_step, function(inst)
-    -- local inst_data = Instance.get_data(inst)
-    
-    if inst.image_index > 12 then inst:destroy() end
 end)

@@ -12,6 +12,7 @@
 
 ### Will-o'-the-Wisp -> Voidsent Flame 
 - Upon hitting an enemy at full health, spawn a lava pillar in a 12m (+2.4m per stack) radius for 260% (+156% per stack) base damage.
+- Is this description from the wiki correct? It doesnt look anything like a lava pillar?
 
 
 ### Dio's best friend -> Pluripotent Larva 
