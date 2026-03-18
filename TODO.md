@@ -11,14 +11,14 @@
 
 ## Mostly done the code
 
-### Dio's best friend -> Pluripotent Larva 
--  Upon death, this item will be consumed and you will return to life with 3 seconds of invulnerability, and all of your items that can be corrupted will be
-
 ### Tougher Times -> Safer Spaces 
 - Blocks incoming damage once. Recharges after 15 seconds (-10% per stack)
 
 
 ## Code done
+
+### Dio's best friend -> Pluripotent Larva 
+-  Upon death, this item will be consumed and you will return to life with 3 seconds of invulnerability, and all of your items that can be corrupted will be
 
 ### AtG Missile Launcher -> Plasma Shrimp 
 - Gain a shield equal to 10% of your maximum health. While you have a shield, hitting an enemy fires a missile that deals 40% (+40% per stack) TOTAL damage

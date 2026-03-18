@@ -29,7 +29,6 @@ Initialize.add_hotloadable(function()
         "objects",
     }
 
-
     for _, folder in ipairs(folders) do
         local names = path.get_files(path.combine(PATH, folder))
         for _, name in ipairs(names) do require(name) end
@@ -70,7 +69,7 @@ Initialize.add_hotloadable(function()
 end)
 
 -- this is just here to fix the display to show the corrupted item
-gm.pre_script_hook(gm.constants['add_item_pickup_display_for_player@gml_Object_oHUD_Create_0'], function(self, other, result, args)
+Hook.add_pre(gm.constants['add_item_pickup_display_for_player@gml_Object_oHUD_Create_0'], function(self, other, result, args)
     if gm.typeof(args[2].value) == "number" then
         local item = Item.wrap(args[2].value)
         args[2].value = gm.translate(item.token_name)
