@@ -5,7 +5,7 @@ local buff = Buff.new("collapseDebuff")
 
 -- ===== Assets =====
 
-local sprite = Sprite.new("buff/relicGuard", "~/assets/sprites/buffs/relicGuard.png", 1, 8, 8)
+local sprite = Sprite.new("buff/collapse", "~/assets/sprites/items/benthicBloom.png", 1, 8, 8)
 
 -- ===== Properties =====
 

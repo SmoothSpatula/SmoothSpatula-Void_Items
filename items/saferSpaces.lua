@@ -7,7 +7,7 @@ local item_broken = Item.new("brokenSaferSpaces")
 
 -- ===== Assets =====
 
-local sprite = Sprite.new("item/ration", "~/assets/sprites/items/ration.png", 1, 16, 16)
+local sprite = Sprite.new("item/saferSpaces", "~/assets/sprites/items/saferSpaces.png", 1, 16, 16)
 local sound  =  Sound.new("item/ration", "~/assets/sounds/items/ration.ogg")
 
 local sprite_broken = Sprite.new("item/rationUsed", "~/assets/sprites/items/rationUsed.png", 1, 16, 16)

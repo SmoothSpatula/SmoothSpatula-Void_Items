@@ -23,7 +23,7 @@ Initialize.add_hotloadable(function()
     end
 
     local corruptions = {
-        willOTheWisp = "voidsentFlames",
+        willOTheWisp = "voidsentFlame",
         ukulele = "polylute",
         tougherTimes = "saferSpaces",
         atgMissileMk1 = "plasmaShrimp"

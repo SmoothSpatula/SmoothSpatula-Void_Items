@@ -8,7 +8,7 @@ local particleShrimp = Particle.new("Shrimp")
 
 -- ===== Assets =====
 
-local sprite = Sprite.new("item/ration", "~/assets/sprites/items/ration.png", 1, 16, 16)
+local sprite = Sprite.new("item/plasmaShrimp", "~/assets/sprites/items/plasmaShrimp.png", 1, 16, 16)
 local sprite_effect = Sprite.new("effect/shrimpEf", "~/assets/sprites/effects/shrimpEffect.png", 1, 4, 4)
 local sprite_explosion_effect = Sprite.new("effect/shrimpExplosionEf", "~/assets/sprites/effects/Symmetrical_impact_003.png", 7, 48, 48)
 

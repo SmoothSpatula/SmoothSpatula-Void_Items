@@ -5,7 +5,7 @@ local item = Item.new("weepingFungus")
 
 -- ===== Assets =====
 
-local sprite = Sprite.new("item/ration", "~/assets/sprites/items/ration.png", 1, 16, 16)
+local sprite = Sprite.new("item/weepingFungus", "~/assets/sprites/items/weepingFungus.png", 1, 16, 16)
 local sound  =  Sound.new("item/ration", "~/assets/sounds/items/ration.ogg")
 
 

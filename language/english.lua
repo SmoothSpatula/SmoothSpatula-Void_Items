@@ -18,7 +18,7 @@ return {
             date        = "4/30/2009",
             story       = "12 boxes of quality-grade MREs for your boys, as requested. \n\nBe warned, they don't taste too good, or even passable - they don't have any flavor at all actually. It's basically a large bland cookie, loaded up with all the nutrients you'll ever need.",
         },
-        voidsentFlames = {
+        voidsentFlame = {
             name        = "Voidsent Flames",
             pickup      = "Full health enemies also detonate on hit. <r>Corrupts all Will-o'-the-wisps.</c>",
             description = "Upon hitting an enemy at <y>full health</c>, spawn a <y>lava pillar</c> in a <y>12m</c> </g>(+2.4m per stack)</c> radius for 260% (+156% per stack) base damage. <r>Corrupts all Will-o'-the-wisps.</c>",
