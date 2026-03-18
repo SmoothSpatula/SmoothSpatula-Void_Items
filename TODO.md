@@ -9,9 +9,6 @@
 ## Working on it
 
 
-### AtG Missile Launcher -> Plasma Shrimp 
-- Gain a shield equal to 10% of your maximum health. While you have a shield, hitting an enemy fires a missile that deals 40% (+40% per stack) TOTAL damage
-
 ## Mostly done the code
 
 ### Dio's best friend -> Pluripotent Larva 
@@ -22,6 +19,10 @@
 
 
 ## Code done
+
+### AtG Missile Launcher -> Plasma Shrimp 
+- Gain a shield equal to 10% of your maximum health. While you have a shield, hitting an enemy fires a missile that deals 40% (+40% per stack) TOTAL damage
+- Missile effect is okay, need to make the explosion effect
 
 ### Will-o'-the-Wisp -> Voidsent Flame 
 - Upon hitting an enemy at full health, spawn a lava pillar in a 12m (+2.4m per stack) radius for 260% (+156% per stack) base damage.
