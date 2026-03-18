@@ -4,6 +4,8 @@ local item = Item.new("plasmaShrimp")
 
 local object = Object.new("shrimpMissileObject")
 
+local particleShrimp = Particle.new("Shrimp")
+
 -- ===== Assets =====
 
 local sprite = Sprite.new("item/ration", "~/assets/sprites/items/ration.png", 1, 16, 16)
@@ -15,7 +17,14 @@ item:set_sprite(sprite)
 item:set_tier(ItemTier.COMMON)
 
 object:set_sprite(sprite_effect)
-object:set_depth(-1)
+object:set_depth(-10)
+
+particleShrimp:set_shape(7)
+particleShrimp:set_life(10, 10)
+particleShrimp:set_speed(0, 0, 0, 0)
+particleShrimp:set_size(0.2, 0.2, 0, 0)
+particleShrimp:set_scale(3, 1)
+particleShrimp:set_color2(Color.from_rgb(227, 111, 200), Color.from_rgb(87, 36, 94))
 
 local max_turn_radius = 2.5
 
@@ -71,6 +80,8 @@ Callback.add(object.on_step, function(inst)
         inst:destroy()
     end
     
+    particleShrimp:set_orientation(inst.direction, inst.direction, 0, 0, 0);
+    particleShrimp:create(inst.x, inst.y, 1)
 
     local dx = inst_data.target.x - inst.x
     local dy = inst_data.target.y - inst.y
