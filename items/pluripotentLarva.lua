@@ -12,7 +12,6 @@ local sprite = Sprite.new("item/pluripotentLarva", "~/assets/sprites/items/pluri
 item:set_sprite(sprite)
 item:set_tier(ItemTier.COMMON)
 
-
 -- ===== Callbacks =====
 
 
@@ -23,9 +22,31 @@ Hook.add_pre(gm.constants.actor_death, function(self, other, result, args)
         self:heal(self.maxhp) 
         self.invincible = 180 
         self:item_take(item)
+        --self:item_give(used_item)
         gm.__rpc_item_proc_dios_friend_implementation__(self.value)
         -- add new animation
-        -- make other items corrupted, might wait for the full list
+
+        for og, crpt in pairs(corruptions) do
+            local original = Item.find(og)
+            local count = self:item_count(original)
+            if count>=1 then
+                corrupted = Item.find(crpt)
+                self:item_take(original, count)
+                self:item_give(corrupted, count)
+
+                local oHUD = gm.instance_find(gm.constants.oHUD, 0)
+                oHUD:add_item_pickup_display_for_player(oHUD, 
+                self.value,
+                gm.translate(corrupted.token_name),
+                gm.translate(corrupted.token_text),
+                corrupted.sprite_id,
+                1,
+                corrupted.tier,
+                false,
+                false)
+            end
+        end
+                
         return false
     end
 end)

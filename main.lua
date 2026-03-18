@@ -8,6 +8,18 @@ mods["ReturnsAPI-ReturnsAPI"].auto{
 
 PATH = _ENV["!plugins_mod_folder_path"]
 
+corruptions = {
+    willOTheWisp = "voidsentFlame",
+    ukulele = "polylute",
+    toughTimes = "saferSpaces",
+    atgMissileMk1 = "plasmaShrimp",
+    diosFriend = "pluripotentLarva",
+    bustlingFungus = "weepingFungus",
+    energyCell = "lysateCell",
+    rustyKnife = "needleTick",
+    lensMakersGlasses = "lostSeersLenses"
+}
+corruptions["56LeafClover"] = "benthicBloom" --freaking lua man, malformed number near '56L'
 
 Initialize.add_hotloadable(function()    
     -- Require all files in content folders
@@ -17,22 +29,16 @@ Initialize.add_hotloadable(function()
         "objects",
     }
 
+
     for _, folder in ipairs(folders) do
         local names = path.get_files(path.combine(PATH, folder))
         for _, name in ipairs(names) do require(name) end
     end
 
-    local corruptions = {
-        willOTheWisp = "voidsentFlame",
-        ukulele = "polylute",
-        tougherTimes = "saferSpaces",
-        atgMissileMk1 = "plasmaShrimp"
-       
-    }
-
 
     -- corruption logic
     Callback.add(Callback.ON_PICKUP_COLLECTED, function(pickup, actor)
+        print(pickup.name)
         --Instance.wrap(pickup):print_variables()
         local item = Item.wrap(pickup.item_id)
         if item.namespace == "vi" then
