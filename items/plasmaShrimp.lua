@@ -10,6 +10,7 @@ local particleShrimp = Particle.new("Shrimp")
 
 local sprite = Sprite.new("item/ration", "~/assets/sprites/items/ration.png", 1, 16, 16)
 local sprite_effect = Sprite.new("effect/shrimpEf", "~/assets/sprites/effects/shrimpEffect.png", 1, 4, 4)
+local sprite_explosion_effect = Sprite.new("effect/shrimpExplosionEf", "~/assets/sprites/effects/Symmetrical_impact_003.png", 7, 48, 48)
 
 -- ===== Properties =====
 
@@ -22,9 +23,11 @@ object:set_depth(-10)
 particleShrimp:set_shape(7)
 particleShrimp:set_life(10, 10)
 particleShrimp:set_speed(0, 0, 0, 0)
-particleShrimp:set_size(0.2, 0.2, 0, 0)
-particleShrimp:set_scale(3, 1)
+particleShrimp:set_size(0.1, 0.1, -0.005, 0.01)
+particleShrimp:set_scale(6, 1)
 particleShrimp:set_color2(Color.from_rgb(227, 111, 200), Color.from_rgb(87, 36, 94))
+particleShrimp:set_alpha3(1, 1, 0)
+particleShrimp:set_blend(1)
 
 local max_turn_radius = 2.5
 
@@ -42,6 +45,11 @@ local function set_missile_on_target(missile, target, speed)
             angle = angle - 360
         end
         missile.direction = angle
+
+        local start_distance = 20 -- change this to whatever distance you want
+        local rad = math.rad(angle)
+        missile.x = missile.x + math.cos(rad) * start_distance
+        missile.y = missile.y - math.sin(rad) * start_distance
 
         local distance = math.sqrt(dx*dx + dy*dy)
         local log_factor = 2
@@ -80,8 +88,7 @@ Callback.add(object.on_step, function(inst)
         inst:destroy()
     end
     
-    particleShrimp:set_orientation(inst.direction, inst.direction, 0, 0, 0);
-    particleShrimp:create(inst.x, inst.y, 1)
+    
 
     local dx = inst_data.target.x - inst.x
     local dy = inst_data.target.y - inst.y
@@ -97,10 +104,12 @@ Callback.add(object.on_step, function(inst)
     if diff < -maxTurn then diff = -maxTurn end
     inst.direction = (inst.direction + diff) % 360
 
+    particleShrimp:set_orientation(inst.direction, inst.direction, 0, 0, 0);
+    particleShrimp:set_scale(inst.speed/2.8, 1)
+    particleShrimp:create(inst.x, inst.y, 1)
+
     if dist < 10 then
-        inst.x = inst_data.target.x
-        inst.y = inst_data.target.y
-        inst_data.parent:fire_direct(inst_data.target, 10, 0, inst.x, inst.y, gm.constants.sSparks1, false)
+        inst_data.parent:fire_direct(inst_data.target, 10, 0, inst_data.target.x, inst_data.target.y, sprite_explosion_effect, false)
         inst:destroy()
         return
     end
