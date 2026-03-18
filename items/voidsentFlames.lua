@@ -4,6 +4,7 @@ local item = Item.new("voidsentFlames")
 -- ===== Assets =====
 
 local sprite = Sprite.new("item/ration", "~/assets/sprites/items/ration.png", 1, 16, 16)
+local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/effects/voidFlamesEffect1.png", 9, 32, 32)
 
 -- https://bdragon1727.itch.io
 

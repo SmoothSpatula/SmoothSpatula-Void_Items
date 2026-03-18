@@ -2,22 +2,30 @@
 
 local item = Item.new("plasmaShrimp")
 
+local object = Object.new("shrimpMissileObject")
+
 -- ===== Assets =====
 
 local sprite = Sprite.new("item/ration", "~/assets/sprites/items/ration.png", 1, 16, 16)
+local sprite_effect = Sprite.new("effect/shrimpEf", "~/assets/sprites/effects/shrimpEffect.png", 1, 4, 4)
 
 -- ===== Properties =====
 
 item:set_sprite(sprite)
 item:set_tier(ItemTier.COMMON)
 
+object:set_sprite(sprite_effect)
+object:set_depth(-1)
+
+local max_turn_radius = 2.5
+
 -- ===== Callbacks =====
 
-local function set_missile_on_target(missile, target) 
+local function set_missile_on_target(missile, target, speed) 
         local dx = target.x - missile.x
         local dy = target.y - missile.y
         local angle = math.deg(math.atan(dy, dx))
-        angle = angle + 15
+        angle = angle + (math.random(0,1)*2-1) * math.random(60, 90)
 
         if angle < 0 then
             angle = angle + 360
@@ -25,28 +33,24 @@ local function set_missile_on_target(missile, target)
             angle = angle - 360
         end
         missile.direction = angle
+
+        local distance = math.sqrt(dx*dx + dy*dy)
+        local log_factor = 2
+        missile.speed = 5 + (math.log(distance + 1))^1.1 * log_factor
     end
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local stack = attacker:item_count(item)
     if stack <= 0 or attacker.shield <= 0 then return end
     
-    missile_inst = Instance.create(attacker.x, attacker.y, gm.constants.oEfMissile)
-    missile_inst.speed = 5
+    missile_inst = Instance.create(attacker.x, attacker.y, object)
     missile_inst.damage = attacker.damage * 0.4 * stack
-    missile_inst.image_xscale = 1
-    missile_inst.image_yscale = 1
-
-    missile_inst:print_variables()
-
-    --Util.table_print(missile_inst.value)
-
-    --set_missile_on_target(missile_inst, target)
-
-    -- Alarm.add(1, 
-    -- end, missile_inst, target)
-
-
+    local inst_data = Instance.get_data(missile_inst)
+    missile_inst.direction = 180
+    inst_data.target = target
+    inst_data.duration = 600
+    inst_data.parent = attacker
+    set_missile_on_target(missile_inst, target) 
     -- play animation and sound wooo
 end)
 
@@ -57,4 +61,42 @@ RecalculateStats.add(function(actor, api)
 
     -- Add stats
     api.maxshield_add_from_maxhp(0.1)
+end)
+
+
+Callback.add(object.on_step, function(inst)
+    local inst_data = Instance.get_data(inst)
+
+    if not Instance.exists(inst_data.target) then 
+        inst:destroy()
+    end
+    
+
+    local dx = inst_data.target.x - inst.x
+    local dy = inst_data.target.y - inst.y
+
+    local dist = math.sqrt(dx*dx + dy*dy)
+    local desired = (360 - math.deg(math.atan(dy, dx))) % 360
+    local diff = (desired - inst.direction + 180) % 360 - 180
+
+    local turnBoost = 1 + (400 / math.max(dist,1)) -- +400 for more agressive finish
+    local maxTurn = max_turn_radius * turnBoost
+
+    if diff > maxTurn then diff = maxTurn end
+    if diff < -maxTurn then diff = -maxTurn end
+    inst.direction = (inst.direction + diff) % 360
+
+    if dist < 10 then
+        inst.x = inst_data.target.x
+        inst.y = inst_data.target.y
+        inst_data.parent:fire_direct(inst_data.target, 10, 0, inst.x, inst.y, gm.constants.sSparks1, false)
+        inst:destroy()
+        return
+    end
+
+    inst_data.duration = inst_data.duration - 1
+    if inst_data.duration < 0 then
+        inst:destroy()
+    end
+
 end)
