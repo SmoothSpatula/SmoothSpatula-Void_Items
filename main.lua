@@ -67,7 +67,8 @@ end)
 gm.pre_script_hook(gm.constants['add_item_pickup_display_for_player@gml_Object_oHUD_Create_0'], function(self, other, result, args)
     if gm.typeof(args[2].value) == "number" then
         local item = Item.wrap(args[2].value)
-        args[2].value = item.token_name
+        args[2].value = gm.translate(item.token_name)
+        args[3].value = gm.translate(item.token_text)
         args[4].value = item.sprite_id
     end
 end)
