@@ -30,7 +30,7 @@ card.spawn_weight                   = spawn_weight
 card.default_spawn_rarity_override  = spawn_rarity
 card.decrease_weight_on_spawn       = true
 
--- Callbacks
+-- ========== Callbacks ==========
 
 Callback.add(obj.on_create, function(inst)
     --inst.is_scrapper = true     -- Flag for other crate-related mods
@@ -79,7 +79,7 @@ end)
 -- print(gm.object_get_name(gm.object_get_parent(gm.constants.oCustomObject_pInteractable)))
 
 
--- add console command to spawn a voidCradle
+-- ========== Command ==========
 
 Console.new{
     "spawn_cradle",
