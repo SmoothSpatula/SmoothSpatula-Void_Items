@@ -29,7 +29,7 @@ Initialize.add_hotloadable(function()
     
 
     local itemTier = ItemTier.new("Void")
-    itemTier.text_color = "r"
+    itemTier.text_color = "p"
     -- Require all files in content folders
     local folders = {
         "items",

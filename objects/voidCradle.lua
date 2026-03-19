@@ -65,6 +65,6 @@ Hook.add_post(gm.constants.interactable_pay_cost, function(self, other, result, 
 end)
 
 
-local oP = Instance.find(gm.constants.oP)
+-- local oP = Instance.find(gm.constants.oP)
 
-obj:create(oP.x, oP.y)
+-- obj:create(oP.x, oP.y)
