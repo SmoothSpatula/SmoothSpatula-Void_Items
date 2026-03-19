@@ -64,6 +64,13 @@ Hook.add_post(gm.constants.interactable_pay_cost, function(self, other, result, 
     Alarm.add(10, function(self) self:destroy() end, self)
 end)
 
+Hook.add_pre(gm.constants.run_create, function(self, other, result, args)
+    local stages =Stage.find_all()
+    for id=0, #stages-1 do
+        local stage = Stage.wrap(id)
+        stage:add_interactable(card)
+    end
+end)
 
 -- local oP = Instance.find(gm.constants.oP)
 
