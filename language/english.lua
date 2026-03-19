@@ -1,68 +1,68 @@
 return {
     item = {
-
         -- Common
-        ballisticVest = {
-            name        = "Ballistic Vest",
-            pickup      = "Reduce incoming damage by 5% and gain a small shield.",
-            description = "Increase <g>armor</c> by <g>5 <c_stack>(+5 per stack)</c> and gain a <b>20 <c_stack>(+20 per stack)</c> <b>health shield</c>.",
-            destination = "1904,\nBaron County,\nMars",
-            date        = "9/03/2056",
-            story       = "Shipment of lightweight body armor, capable of absorbing on average up to twelve 9mm rounds. Anything larger will pierce right through them though.\n\nWe've tested it throughly this time before this batch was produced, so there shouldn't be another fatal incident.",
-        },
-        ration = {
-            name        = "Ration",
-            pickup      = "Receive a large heal when in peril. Recharges upon entering a new stage.",
-            description = "Falling below <r>25% health</c> heals you for <g>50% health</c>. Recharges <b>upon entering a new stage</c>. <c_stack>Gain 1 extra use per stack.",
-            destination = "Fort Shell,\nManhattan, NY,\nEarth",
-            date        = "4/30/2009",
-            story       = "12 boxes of quality-grade MREs for your boys, as requested. \n\nBe warned, they don't taste too good, or even passable - they don't have any flavor at all actually. It's basically a large bland cookie, loaded up with all the nutrients you'll ever need.",
-        },
         voidsentFlame = {
             name        = "Voidsent Flames",
             pickup      = "Full health enemies also detonate on hit. <r>Corrupts all Will-o'-the-wisps.</c>",
-            description = "Upon hitting an enemy at <y>full health</c>, spawn a <y>lava pillar</c> in a <y>12m</c> </g>(+2.4m per stack)</c> radius for 260% (+156% per stack) base damage. <r>Corrupts all Will-o'-the-wisps.</c>",
+            description = "Upon hitting an enemy at <y>full health</c>, spawn a <y>lava pillar</c> in a <y>12m</c> </g>(+2.4m per stack)</c> radius for <y>260%</c> <g>(+156% per stack)</c> base damage. <r>Corrupts all Will-o'-the-wisps.</c>",
+        },
+
+        weepingFungus = {
+            name        = "Weeping Fungus",
+            pickup      = "Heals while sprinting. <r>Corrupts all Bustling Fungus.</c>",
+            description = "While <y>sprinting</c>, heal for <y>2%</c> <g>(+2% per stack)</c> of your <y>maximum health</c> per second. <r>Corrupts all Bustling Fungus.</c>",
+        },
+
+        needleTick = {
+            name        = "Needletick",
+            pickup      = "Chance to collapse enemies on hit. <r>Corrupts all Tri-Tip Daggers.</c>",
+            description = "<y>10%</c> <g>(+10% per stack)</c> chance to apply <y>Collapse</c> on hit, dealing <y>400%</c> total damage. <r>Corrupts all Tri-Tip Daggers.</c>",
         },
 
 
         -- Uncommon
-        phiConstruct = {
-            name        = "Phi Construct",
-            pickup      = "Gain a small shield and a defensive construct.",
-            description = "Gain a <b>20 <c_stack>(+20 per stack) <b>health shield</c> and a small <y>defensive construct</c> that <y>fires at nearby enemies</c> and <b>projectiles</c> for <y>70% damage</c> every <y>0.7</c> seconds; <y>fire rate </c>increases by <y>1% <c_stack>(+0.5% per stack) </c>per <b>maximum shield point</c>.",
-            destination = "Complex 3B,\nSaturn,\n???",
-            date        = "6/4/2056",
-            story       = "...?\n\nBOOTING...\n\nSCANNING SURROUNDINGS\n\nUNKNOWN PRESCENCE DETECTED\n\n...\n\nFAILED TO LOAD DIRECTIVES\n\n...\n\nRESETTING...\n\nESTABLISHING NEW DIRECTIVES\n\n...\n\nESCORTING FRIENDLY LIFEFORM",
-            priority    = "<g>Field-found</c>",
+        polylute = {
+            name        = "Polylute",
+            pickup      = "Chance to fire lightning for massive damage. <r>Corrupts all Ukuleles.</c>",
+            description = "<y>25%</c> chance to fire lightning that deals <y>60%</c> total damage up to <y>3</c> times <g>(+2 per stack)</c>. <r>Corrupts all Ukuleles.</c>",
         },
-        relicGuard = {
-            name        = "Relic Guard",
-            pickup      = "Gain a small shield. Fortify nearby allies temporarily when it breaks.",
-            description = "Gain a <b>5% <c_stack>(+5% per stack) <b>health shield</c>. On shield break, <y>all nearby allies</c> gain <g>barrier</c> and <g>armor</c> equal to <y>100% <c_stack>(+50% per stack)</c> of your <b>maximum shield</c>; <g>armor</c> bonus lasts for <y>5</c> seconds.",
-            destination = "Bldg. 1\n3 Wry Ave.\nTheworl,\nTitan",
-            date        = "11/14/2056",
-            story       = "Found this stashed in Thorton's attic - somehow he managed to hide a shield of this size from the rest of us during that expedition. I didn't find anything else in there, but regardless he is no longer a part of the team. The shield itself is surprisingly solid, at least compared to the other one, although I would still be careful with handling it.",
-            priority    = "<g>Priority/Fragile</c>",
+
+        saferSpaces = {
+            name        = "Safer Spaces",
+            pickup      = "Blocks incoming damage periodically. <r>Corrupts all Tougher Times.</c>",
+            description = "Gain a <y>100%</c> chance to <y>block</c> incoming damage once every <y>15 seconds</c> <g>(-10% per stack)</c>. <r>Corrupts all Tougher Times.</c>",
         },
-        sixShooter = {
-            name        = "Six Shooter",
-            pickup      = "Every 6 basic attacks critically strike.",
-            description = "Every <b>6th basic attack</c> deals <y>33% <c_stack>(+33% per stack) <y>more damage</c> and is <y>guaranteed to critically strike</c>.",
-            destination = "Apt. #302,\n12th District,\nNeo Metro,\nVenus",
-            date        = "8/13/2056",
-            story       = "An antique from days past. The cylinder is somewhat damaged, and black powder is pretty hard (and expensive!) to get nowadays, but regardless it should be a nice addition to your collection if you aren't planning on firing it.",
+
+        plasmaShrimp = {
+            name        = "Plasma Shrimp",
+            pickup      = "Firing while shielded launches missiles. <r>Corrupts all AtG Missile Mk. 1.</c>",
+            description = "While you have <y>shield</c>, hitting an enemy fires a missile that deals <y>40%</c> <g>(+40% per stack)</c> TOTAL damage. <r>Corrupts all AtG Missile Mk. 1.</c>",
+        },
+
+        lysateCell = {
+            name        = "Lysate Cell",
+            pickup      = "Special skill gains an extra charge. <r>Corrupts all Fuel Cells.</c>",
+            description = "Add <y>+1</c> <g>(+1 per stack)</c> charge of your <y>Special skill</c>. <r>Corrupts all Fuel Cells.</c>",
         },
 
 
-        -- Rare
-        overloadedCapacitor = {
-            name        = "Overloaded Capacitor",
-            pickup      = "Gain a large amount of shield. Fire chain lightning while it's active.",
-            description = "Gain an <b>18% <c_stack>(+18% per stack) <b>health shield</c>. While shield is active, all your <y>attacks fire chain lightning</c> for a bonus <y>30% <c_stack>(+30% per stack) <y>TOTAL damage</c> on up to <y>2</c> targets.",
-            destination = "Ampère Weapons Lab,\nEarth",
-            date        = "3/17/2056",
-            story       = "These prototype VF-12 high-density supercapacitors are currently the most powerful ones of their size in the solar system. Should suit your needs. Do NOT let them build up any charge past their cap; they have a stopping problem and WILL discharge any overflow.",
-            priority    = "<r>High Priority/Fragile</c>",
+        -- Legendary
+        pluripotentLarva = {
+            name        = "Pluripotent Larva",
+            pickup      = "Revive with a random item. <r>Corrupts all Dio's Best Friend.</c>",
+            description = "Upon death, this item <y>consumes itself</c> and you are <y>reborn</c> with <y>full health</c> plus <y>3</c> <g>(+3 per stack)</c> random items. <r>Corrupts all Dio's Best Friend.</c>",
+        },
+
+        lostSeersLenses = {
+            name        = "Lost Seer's Lenses",
+            pickup      = "Chance to instantly kill enemies. <r>Corrupts all Lens-Maker's Glasses.</c>",
+            description = "<y>0.5%</c> <g>(+0.5% per stack)</c> chance to instantly <y>kill</c> a non-boss enemy. <r>Corrupts all Lens-Maker's Glasses.</c>",
+        },
+
+        benthicBloom = {
+            name        = "Benthic Bloom",
+            pickup      = "Upgrades items at the start of each stage. <r>Corrupts all 57 Leaf Clovers.</c>",
+            description = "At the start of each stage, upgrade <y>3</c> <g>(+3 per stack)</c> random items to items of the next rarity. <r>Corrupts all 57 Leaf Clovers.</c>",
         },
     }
 }

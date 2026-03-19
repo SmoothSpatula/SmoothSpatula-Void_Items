@@ -77,3 +77,24 @@ end)
 -- obj:create(oP.x, oP.y)
 
 -- print(gm.object_get_name(gm.object_get_parent(gm.constants.oCustomObject_pInteractable)))
+
+
+-- add console command to spawn a voidCradle
+
+Console.new{
+    "spawn_cradle",
+    {
+        "Spawns a void cradle at the current mouse position."
+    },
+    function(args)
+        if Net.client then
+            Console.print("Must be lobby host.")
+            return
+        end
+
+        local x, y = Global.mouse_x, Global.mouse_y
+        for i = 1, (count or 1) do
+            Instance.create(x, y, obj)
+        end
+    end
+}
