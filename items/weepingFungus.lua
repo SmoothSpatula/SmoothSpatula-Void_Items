@@ -12,8 +12,7 @@ local sound  =  Sound.new("item/ration", "~/assets/sounds/items/ration.ogg")
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.COMMON)
-item.loot_tags = Item.LootTag.CATEGORY_HEALING
+item:set_tier(ItemTier.find("Void"))
 
 
 -- ===== Callbacks =====

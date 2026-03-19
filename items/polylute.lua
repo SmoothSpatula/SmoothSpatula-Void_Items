@@ -13,7 +13,7 @@ local sprite_effect = Sprite.new("effect/polyluteLightning", "~/assets/sprites/e
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.COMMON)
+item:set_tier(ItemTier.find("Void"))
 
 object:set_sprite(sprite_effect)
 object:set_depth(10)

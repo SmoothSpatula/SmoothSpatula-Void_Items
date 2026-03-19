@@ -14,6 +14,9 @@
 ### Tougher Times -> Safer Spaces 
 - Blocks incoming damage once. Recharges after 15 seconds (-10% per stack)
 
+### Void Cradle 
+- needs an idle animation, an opening effect as well as an opening animation + sound
+
 
 ## Code done
 

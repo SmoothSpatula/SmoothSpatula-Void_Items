@@ -21,7 +21,15 @@ corruptions = {
 }
 corruptions["56LeafClover"] = "benthicBloom" --freaking lua man, malformed number near '56L'
 
+
+
+
+
 Initialize.add_hotloadable(function()    
+    
+
+    local itemTier = ItemTier.new("Void")
+    itemTier.text_color = "r"
     -- Require all files in content folders
     local folders = {
         "items",
@@ -37,7 +45,6 @@ Initialize.add_hotloadable(function()
 
     -- corruption logic
     Callback.add(Callback.ON_PICKUP_COLLECTED, function(pickup, actor)
-        print(pickup.name)
         --Instance.wrap(pickup):print_variables()
         local item = Item.wrap(pickup.item_id)
         if item.namespace == "vi" then
@@ -63,8 +70,6 @@ Initialize.add_hotloadable(function()
             pickup.on_collect = corrupted_item.on_acquired
             pickup.show_pickup_display = true
         end
-
-
     end)
 end)
 

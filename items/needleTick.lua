@@ -13,7 +13,7 @@ local sprite = Sprite.new("item/needleTick", "~/assets/sprites/items/needleTick.
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.COMMON)
+item:set_tier(ItemTier.find("Void"))
 
 buff = Buff.find("collapseDebuff")
 buff_time = 180
@@ -47,8 +47,8 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
         inst_data.collapse_count = 1
         inst_data.attacker = attacker
     end
-    print(target:buff_count(buff))
-    print(gm.get_buff_time(target.value, buff.value))
+    -- print(target:buff_count(buff))
+    -- print(gm.get_buff_time(target.value, buff.value))
 
     -- play animation and sound wooo
 end)

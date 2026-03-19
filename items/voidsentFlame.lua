@@ -11,7 +11,7 @@ local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/ef
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.COMMON)
+item:set_tier(ItemTier.find("Void"))
 
 -- ===== Callbacks =====
 

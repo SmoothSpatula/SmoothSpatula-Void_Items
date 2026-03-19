@@ -18,8 +18,7 @@ local sprite_broken = Sprite.new("item/rationUsed", "~/assets/sprites/items/rati
 item_broken:set_sprite(sprite_broken)
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.COMMON)
-item.loot_tags = Item.LootTag.CATEGORY_HEALING
+item:set_tier(ItemTier.find("Void"))
 
 local restore_safer_spaces = function (act)
     act:item_give(item)
@@ -34,7 +33,7 @@ DamageCalculate.add(function(api)
     api.damage = 0
     api.hit:item_take(item)
     api.hit:item_give(item_broken)
-    print("test")
+    --print("test")
     Alarm.add(300, restore_safer_spaces, api.hit)
 end)
 

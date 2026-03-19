@@ -10,7 +10,7 @@ local sprite = Sprite.new("item/pluripotentLarva", "~/assets/sprites/items/pluri
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.COMMON)
+item:set_tier(ItemTier.find("Void"))
 
 -- ===== Callbacks =====
 
