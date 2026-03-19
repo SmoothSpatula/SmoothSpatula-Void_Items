@@ -27,7 +27,7 @@ particleShrimp:set_size(0.1, 0.1, 0, 0.01)
 particleShrimp:set_scale(6, 0.5)
 particleShrimp:set_color2(Color.from_rgb(227, 111, 200), Color.from_rgb(87, 36, 94))
 particleShrimp:set_alpha3(1, 1, 0)
-particleShrimp:set_blend(1)
+particleShrimp:set_blend(0)
 
 local max_turn_radius = 2.5
 
@@ -69,6 +69,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     inst_data.damage = stack * 0.4
     inst_data.last_x = attacker.x
     inst_data.last_y = attacker.y
+    inst_data.max_turn_radius = max_turn_radius
     set_missile_on_target(missile_inst, target) 
     -- play animation and sound wooo
 end)
@@ -102,7 +103,7 @@ Callback.add(object.on_step, function(inst)
     local diff = (desired - inst.direction + 180) % 360 - 180
 
     local turnBoost = 1 + (400 / math.max(dist,1)) -- +400 for more agressive finish
-    local maxTurn = max_turn_radius * turnBoost
+    local maxTurn = inst_data.max_turn_radius * turnBoost
 
     if diff > maxTurn then diff = maxTurn end
     if diff < -maxTurn then diff = -maxTurn end
@@ -112,7 +113,7 @@ Callback.add(object.on_step, function(inst)
     inst_data.last_y = inst.y
 
     if dist < 10 then
-        inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, sprite_explosion_effect, false)
+        inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false)
         inst:destroy()
         return
     end

@@ -3,12 +3,6 @@
 ### All yellow items -> Newly Hatched Zoea 
 - Every 60 (-50% per stack) seconds, gain a random Void ally. Can have up to 1 (+1 per stack) allies at a time.
 
-### Ukulele -> polylute 
-- 25% chance to fire lightning for 60% TOTAL damage up to 3 (+3 per stack) times. Corrupts all Ukuleles. Single target on the 
-
-## Working on it
-
-
 ## Mostly done the code
 
 ### Tougher Times -> Safer Spaces 
@@ -17,6 +11,8 @@
 ### Void Cradle 
 - needs an idle animation, an opening effect as well as an opening animation + sound
 
+### Ukulele -> polylute 
+- 25% chance to fire lightning for 60% TOTAL damage up to 3 (+3 per stack) times. Corrupts all Ukuleles. Single target on the 
 
 ## Code done
 

@@ -75,3 +75,5 @@ end)
 -- local oP = Instance.find(gm.constants.oP)
 
 -- obj:create(oP.x, oP.y)
+
+-- print(gm.object_get_name(gm.object_get_parent(gm.constants.oCustomObject_pInteractable)))

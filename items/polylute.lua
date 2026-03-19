@@ -1,7 +1,7 @@
 -- 2) Ukulele -> polylute -> 25% chance to fire lightning for 60% TOTAL damage up to 3 (+3 per stack) times. Corrupts all Ukuleles. Single target on the 
 
 local item = Item.new("polylute")
-local object = Object.new("polyluteLightningEf")
+--local object = Object.new("polyluteLightningEf")
 
 -- ===== Assets =====
 
@@ -15,46 +15,48 @@ local sprite_effect = Sprite.new("effect/polyluteLightning", "~/assets/sprites/e
 item:set_sprite(sprite)
 item:set_tier(ItemTier.find("Void"))
 
-object:set_sprite(sprite_effect)
-object:set_depth(10)
+-- object:set_sprite(sprite_effect)
+-- object:set_depth(10)
+
+local object = Object.find("shrimpMissileObject")
+local particleShrimp = Particle.find("Shrimp")
+
+local max_turn_radius = 1.2
+local max_turn_radius_low = 1.1
+local max_turn_radius_add = 0.5
+local distance_from_target = 20
 
 -- ===== Callbacks =====
 
-RecalculateStats.add(function(actor, api)
-    -- Check buff count
-    local stack = actor:item_count(item)
-    if stack <= 0 then return end
-
-    -- Add stats
-    api.maxshield_add_from_maxhp(0.1)
-end)
-
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
-    if count <= 0 or attacker.shield <= 0 then return end
+    if count <= 0 or math.random(0, 99) > 25 then return end
 
-    local lightning = object:create(target.x, target.y)
-    local inst_data = Instance.get_data(lightning)
-    inst_data.target = target
+    local actual_nb = math.min(count*3, 30) -- cap it or it lags quite a bit and looks worse
+
+    for i=1, actual_nb do
+        --positioning 
+        local first_angle = math.random(0, 359)
+        local rad = math.rad(first_angle)
+        local missile_x = target.x + math.cos(rad) * distance_from_target
+        local missile_y = target.y - math.sin(rad) * distance_from_target
+        missile_inst = Instance.create(missile_x, missile_y, object)
+
+        local second_angle = first_angle + (math.random(0,1)*2-1) * math.random(15, 90)
+        missile_inst.direction = second_angle%360
+        missile_inst.speed = math.random(3, 7)
+
+        -- data
+        local inst_data = Instance.get_data(missile_inst)
+        inst_data.target = target
+        inst_data.duration = 120
+        inst_data.parent = attacker
+        inst_data.damage = 0.6 *(count*3/actual_nb)
+        inst_data.last_x = attacker.x
+        inst_data.last_y = attacker.y
+        --inst_data.max_turn_radius = max_turn_radius_low + math.random()*max_turn_radius_add
+        inst_data.max_turn_radius = max_turn_radius
+    end
 
     -- play animation and sound wooo
-end)
-
-Callback.add(object.on_create, function(inst)
-    local inst_data = Instance.get_data(inst)
-    inst.direction = math.random(0, 359)
-    inst.image_speed = 0.2
-        inst.image_xscale = gm.sprite_get_width(inst_data.target.sprite_index) * inst_data.target.image_xscale * 2
-        inst.image_yscale = gm.sprite_get_height(inst_data.target.sprite_index) * inst_data.target.image_yscale * 2
-end)
-
-Callback.add(object.on_step, function(inst)
-    local inst_data = Instance.get_data(inst)
-    
-    if inst.image_index > 13 or not Instance.exists(inst_data.target) then
-        inst:destroy()
-    else
-        inst.x = inst_data.target.x
-        inst.y = inst_data.target.y
-    end
 end)
