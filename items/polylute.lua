@@ -95,19 +95,18 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
     if count <= 0 then return end --comment for testing or math.random(0, 99) > 25 then return end
 
-    local actual_nb = math.min(count*3, 30) -- cap it or it lags quite a bit and looks worse
+    local actual_nb = math.min(count, 30) -- cap it or it lags quite a bit and looks worse
     for i=1, actual_nb do
         local inst = Instance.create(target.x, target.y, object)
         local inst_data = Instance.get_data(inst)
         inst_data.surface = -1
-        inst_data.duration = 10
+        inst_data.duration = 13
 
-        local pts = generate_curve_points(
-            15,
-            3,   -- curvature
-            12     -- number of segments
-        )
-        inst_data.pts = pts
+        local three_pts = {}
+        three_pts[1] = generate_curve_points(15,3,12)
+        three_pts[2] = generate_curve_points(15,3,12)
+        three_pts[3] = generate_curve_points(15,3,12)
+        inst_data.three_pts = three_pts
         inst_data.target = target
 
     end
@@ -132,24 +131,41 @@ end)
 -- 12 line is disapearing, second circle is pink
 -- 15 end
 
+local COLOR_PINK = Color.from_rgb(188, 143, 143)
 
 Callback.add(object.ON_DRAW, function(inst)
     local inst_data = Instance.get_data(inst)
-    
     if not Util.bool(gm.surface_exists(inst_data.surface)) then
         inst_data.surface = gm.surface_create(100, 100)
+    else
         gm.surface_set_target(inst_data.surface)
+        --gm.draw_clear_alpha(Color.BLACK,0)
         gm.draw_set_color(Color.WHITE)
-        local pts = inst_data.pts
-        for i = 1, #pts - 1 do
+        
+        --for i = 1, #pts - 1 do
+        local i = 12 -  inst_data.duration
+        for j=1, 3 do
+            local pts = inst_data.three_pts[j]
+            gm.draw_set_color(Color.WHITE)
             gm.draw_line(pts[i].x + 50, pts[i].y+50, pts[i + 1].x+50, pts[i + 1].y+50)
+            if i < 4 then
+                gm.draw_set_color(Color.WHITE)
+                gm.draw_circle(pts[1].x + 50, pts[1].y + 50, 4, false)
+                gm.draw_set_color(Color.BLACK)
+                gm.draw_circle(pts[1].x + 50, pts[1].y + 50, 3, false)
+            elseif i < 8 then 
+                gm.draw_set_color(Color.FUCHSIA)
+                gm.draw_circle(pts[1].x + 50, pts[1].y + 50, 4, false)
+                gm.draw_set_color(Color.WHITE)
+                gm.draw_circle(pts[#pts].x + 50, pts[#pts].y + 50, 4, false)
+                gm.draw_set_color(Color.BLACK)
+                gm.draw_circle(pts[#pts].x + 50, pts[#pts].y + 50, 3, false)
+            elseif i < 13 then
+                gm.draw_set_color(Color.FUCHSIA)
+                gm.draw_circle(pts[#pts].x + 50, pts[#pts].y + 50, 4, false)
+            end
         end
-
-        gm.draw_circle(pts[1].x + 50, pts[1].y + 50, 4, false)
-        gm.draw_circle(pts[#pts].x + 50, pts[#pts].y + 50, 4, false)
-        gm.draw_set_color(Color.PURPLE)
-        gm.draw_circle(pts[1].x + 50, pts[1].y + 50, 3, false)
-        gm.draw_circle(pts[#pts].x + 50, pts[#pts].y + 50, 3, false)
+    
         gm.surface_reset_target()
     end
     gm.draw_set_alpha(1)
