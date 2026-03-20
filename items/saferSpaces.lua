@@ -1,40 +1,25 @@
--- Ration
+-- Safer Spaces
 
 local item = Item.new("saferSpaces")
-
-local item_broken = Item.new("brokenSaferSpaces")
 
 
 -- ===== Assets =====
 
 local sprite = Sprite.new("item/saferSpaces", "~/assets/sprites/items/saferSpaces.png", 1, 16, 16)
-local sound  =  Sound.new("item/ration", "~/assets/sounds/items/ration.ogg")
-
-local sprite_broken = Sprite.new("item/rationUsed", "~/assets/sprites/items/rationUsed.png", 1, 16, 16)
 
 
 -- ===== Properties =====
 
-item_broken:set_sprite(sprite_broken)
-
 item:set_sprite(sprite)
 item:set_tier(ItemTier.find("Void"))
 
-local restore_safer_spaces = function (act)
-    act:item_give(item)
-    act:item_take(item_broken)
-end
+
 -- ===== Callbacks =====
 
 -- Tougher Times -> Safer Spaces -> Blocks incoming damage once. Recharges after 15 seconds (-10% per stack)
 
-DamageCalculate.add(function(api)
-    if api.hit:item_count(item) <= 0 then return end
-    api.damage = 0
-    api.hit:item_take(item)
-    api.hit:item_give(item_broken)
-    --print("test")
-    Alarm.add(300, restore_safer_spaces, api.hit)
+Callback.add(item.on_acquired, function(actor, stack)
+    actor:buff_apply(Buff.find("saferSpaces"), 1)
 end)
 
 

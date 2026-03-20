@@ -4,7 +4,7 @@ local item = Item.new("lysateCell")
 
 -- ===== Assets =====
 
-local sprite = Sprite.new("item/lysateCell", "~/assets/sprites/items/lysateCell.png", 1, 16, 16)
+local sprite = Sprite.new("item/lysateCell", "~/assets/sprites/items/lysateCell.png", 1, 16, 17)
 
 -- ===== Properties =====
 
