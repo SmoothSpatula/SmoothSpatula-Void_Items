@@ -6,12 +6,15 @@ local item = Item.new("voidsentFlame")
 local sprite = Sprite.new("item/voidsentFlame", "~/assets/sprites/items/voidsentFlame.png", 1, 16, 16)
 local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/effects/voidFlamesEffect1.png", 9, 32, 32)
 
+
 -- https://bdragon1727.itch.io
 
 -- ===== Properties =====
 
 item:set_sprite(sprite)
 item:set_tier(ItemTier.find("Void"))
+
+sprite_effect:set_speed(2)
 
 -- ===== Callbacks =====
 

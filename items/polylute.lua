@@ -17,7 +17,7 @@ item:set_sprite(sprite)
 item:set_tier(ItemTier.find("Void"))
 
 object:set_sprite(-1)
-object:set_depth(10)
+object:set_depth(-1)
 
 local particlePolylute = Particle.new("Polylute")
 particlePolylute:set_shape(7)
@@ -125,6 +125,7 @@ Callback.add(object.on_step, function(inst)
     local inst_data = Instance.get_data(inst)
 
     inst_data.duration = inst_data.duration - 1
+
     if inst_data.duration < 0 then
         if Util.bool(gm.surface_exists(inst_data.surface)) then
             gm.surface_free(inst_data.surface)
@@ -132,12 +133,11 @@ Callback.add(object.on_step, function(inst)
         -- do the damage at the end location of the arcs
         for i=0, inst_data.count-1 do
             local pts = inst_data.all_pts[(i%(#inst_data.all_pts))+1]
-            print(pts[#pts].x, pts[#pts].y)
             local attack = inst_data.parent:fire_direct(inst_data.target, 0.6, 0, 
                 pts[#pts].x + inst_data.target.x, pts[#pts].y + inst_data.target.y, 
                 gm.constants.sSparks1, false)
 
-            print(attack.attack_info)
+            --print(attack.attack_info)
         end
 
         inst:destroy()

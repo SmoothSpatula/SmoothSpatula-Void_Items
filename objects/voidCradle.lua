@@ -21,7 +21,7 @@ local obj = Object.new("voidCradle", Object.Parent.INTERACTABLE)
 obj:set_sprite(sCradle)
 obj:set_depth(1)
 
-local card = InteractableCard.new("scrapper")
+local card = InteractableCard.new("voidCradle")
 card.object_id                      = obj
 card.required_tile_space            = 0
 card.spawn_with_sacrifice           = true
