@@ -124,3 +124,7 @@ Callback.add(object.on_step, function(inst)
     end
 
 end)
+
+-- ===== Additional =====
+
+ItemLog.new_from_item(item)

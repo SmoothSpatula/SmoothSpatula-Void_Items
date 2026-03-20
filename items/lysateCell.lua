@@ -22,3 +22,7 @@ RecalculateStats.add(function(actor, api)
     api.skill_special.cooldown_mult(0.67)
     api.skill_special.max_stock_add(stack)
 end)
+
+-- ===== Additional =====
+
+ItemLog.new_from_item(item)
