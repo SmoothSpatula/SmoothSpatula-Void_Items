@@ -96,9 +96,9 @@ end
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
-    if count <= 0 then return end --comment for testing or math.random(0, 99) > 25 then return end
+    if count <= 0 or math.random(1, 100) > 25 then return end
 
-    local actual_nb = math.min(count, 30) -- cap it or it lags quite a bit and looks worse
+    local actual_nb = math.min(count*3, 30) -- cap it or it lags quite a bit and looks worse
     local inst = Instance.create(target.x, target.y, object)
     local inst_data = Instance.get_data(inst)
     inst_data.surface = -1
@@ -109,12 +109,14 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local size_y = gm.sprite_get_height(target.sprite_index)
     inst_data.size_x = size_x
     inst_data.size_y = size_y
-    local three_pts = {}
+    local all_pts = {}
     for i=1, actual_nb do
-        three_pts[i] = generate_curve_points(15,2,12, size_x, size_y)
+        all_pts[i] = generate_curve_points(15,2,12, size_x, size_y)
     end
-    inst_data.three_pts = three_pts
+    inst_data.count = count
+    inst_data.all_pts = all_pts
     inst_data.target = target
+    inst_data.parent = attacker
     
     -- play animation and sound wooo
 end)
@@ -124,6 +126,16 @@ Callback.add(object.on_step, function(inst)
 
     inst_data.duration = inst_data.duration - 1
     if inst_data.duration < 0 then
+        if Util.bool(gm.surface_exists(inst_data.surface)) then
+            gm.surface_free(inst_data.surface)
+        end
+        -- do the damage
+        for i=1, inst_data.count do
+            local pts = inst_data.all_pts[i]
+            
+            inst_data.parent:fire_direct(inst_data.target, 0.6, 0, pts[#pts].x, pts[#pts].y, gm.constants.sSparks1, false)
+        end
+
         inst:destroy()
     end
 
@@ -151,9 +163,8 @@ Callback.add(object.ON_DRAW, function(inst)
         gm.draw_set_color(Color.WHITE)
         
         local i = 12 -  math.floor(inst_data.duration/2)
-        print(i)
-        for j=1, #inst_data.three_pts do
-            local pts = inst_data.three_pts[j]
+        for j=1, #inst_data.all_pts do
+            local pts = inst_data.all_pts[j]
             gm.draw_set_color(Color.WHITE)
 
             if i > 1 then 
@@ -163,7 +174,6 @@ Callback.add(object.ON_DRAW, function(inst)
             if i < 12 then
                 gm.draw_line(pts[i+1].x + size_x, pts[i+1].y + size_y, pts[i + 2].x+ size_x, pts[i + 2].y + size_y)
             end
-
 
             if i < 4 then
                 gm.draw_set_color(Color.WHITE)
@@ -180,6 +190,7 @@ Callback.add(object.ON_DRAW, function(inst)
             elseif i < 13 then
                 gm.draw_set_color(Color.FUCHSIA)
                 gm.draw_circle(pts[#pts].x + size_x, pts[#pts].y + size_y, 4, false)
+                
             end
         end
     
