@@ -129,11 +129,15 @@ Callback.add(object.on_step, function(inst)
         if Util.bool(gm.surface_exists(inst_data.surface)) then
             gm.surface_free(inst_data.surface)
         end
-        -- do the damage
-        for i=1, inst_data.count do
-            local pts = inst_data.all_pts[i]
-            
-            inst_data.parent:fire_direct(inst_data.target, 0.6, 0, pts[#pts].x, pts[#pts].y, gm.constants.sSparks1, false)
+        -- do the damage at the end location of the arcs
+        for i=0, inst_data.count-1 do
+            local pts = inst_data.all_pts[(i%(#inst_data.all_pts))+1]
+            print(pts[#pts].x, pts[#pts].y)
+            local attack = inst_data.parent:fire_direct(inst_data.target, 0.6, 0, 
+                pts[#pts].x + inst_data.target.x, pts[#pts].y + inst_data.target.y, 
+                gm.constants.sSparks1, false)
+
+            print(attack.attack_info)
         end
 
         inst:destroy()
@@ -168,10 +172,13 @@ Callback.add(object.ON_DRAW, function(inst)
             gm.draw_set_color(Color.WHITE)
 
             if i > 1 then 
+                gm.draw_set_color(Color.PURPLE)
                 gm.draw_line(pts[i-1].x + size_x, pts[i-1].y + size_y, pts[i].x+ size_x, pts[i].y + size_y)
             end
-            gm.draw_line(pts[i].x + size_x, pts[i].y + size_y, pts[i + 1].x+ size_x, pts[i + 1].y + size_y)
+                gm.draw_set_color(Color.WHITE)
+                gm.draw_line(pts[i].x + size_x, pts[i].y + size_y, pts[i + 1].x+ size_x, pts[i + 1].y + size_y)
             if i < 12 then
+                gm.draw_set_color(Color.WHITE)
                 gm.draw_line(pts[i+1].x + size_x, pts[i+1].y + size_y, pts[i + 2].x+ size_x, pts[i + 2].y + size_y)
             end
 
