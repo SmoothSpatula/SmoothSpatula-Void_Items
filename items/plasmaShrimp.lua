@@ -86,17 +86,19 @@ end)
 
 Callback.add(object.on_step, function(inst)
     local inst_data = Instance.get_data(inst)
+    
 
-    if not Instance.exists(inst_data.target) then 
-        inst:destroy()
+    if Instance.exists(inst_data.target) then
+        inst_data.tx = inst_data.target.x
+        inst_data.ty = inst_data.target.y
     end
 
     particleShrimp:set_orientation(inst.direction, inst.direction, 0, 0, 0);
     particleShrimp:set_scale(inst.speed/3, 0.7)
     particleShrimp:create((inst.x + inst_data.last_x) / 2, (inst.y + inst_data.last_y) / 2, 1)
 
-    local dx = inst_data.target.x - inst.x
-    local dy = inst_data.target.y - inst.y
+    local dx = inst_data.tx - inst.x
+    local dy = inst_data.ty - inst.y
 
     local dist = math.sqrt(dx*dx + dy*dy)
     local desired = (360 - math.deg(math.atan(dy, dx))) % 360
@@ -113,7 +115,9 @@ Callback.add(object.on_step, function(inst)
     inst_data.last_y = inst.y
 
     if dist < 10 then
-        inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false)
+        if Instance.exists(inst_data.target) then
+            inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false)
+        end
         inst:destroy()
         return
     end

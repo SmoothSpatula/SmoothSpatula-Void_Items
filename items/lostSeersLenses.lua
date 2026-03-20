@@ -2,6 +2,7 @@
 
 local item = Item.new("lostSeersLenses")
 local object = Object.new("lensesVoidEf")
+local particleSeer = Particle.new("lostSeersLensesParticle")
 
 -- ===== Assets =====
 
@@ -27,6 +28,17 @@ object:set_sprite(effect_sprite)
 effect_sprite:set_speed(1)
 object:set_depth(-11)
 
+
+particleSeer:set_shape(0)
+particleSeer:set_life(60, 80)
+particleSeer:set_speed(2, 2, -0.05, 0.05)
+--particleSeer:set_size(0.2, 0.2, -0.005, 0.005)
+particleSeer:set_scale(30, 30)
+particleSeer:set_color2(Color.from_rgb(219, 100, 205), Color.from_rgb(255, 255, 255))
+particleSeer:set_alpha3(1, 1, 1)
+particleSeer:set_blend(0)
+
+
 -- ===== Callbacks =====
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
@@ -36,7 +48,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
         local inst = Instance.create(target.x, target.y, object)
         local inst_data = Instance.get_data(inst)
         inst_data.surface = -1
-        inst_data.duration = 30
+        inst_data.duration = 40
         inst_data.size_x = gm.sprite_get_width(target.sprite_index)
         inst_data.size_y = gm.sprite_get_height(target.sprite_index)
 
@@ -53,9 +65,22 @@ Callback.add(object.on_step, function(inst)
 
     inst_data.duration = inst_data.duration - 1
 
+    if inst_data.duration == 15 then
+        
+        for i=1, 20 do
+            --print()
+            particleSeer:set_speed(1, 3, 0, 0)
+            particleSeer:set_direction(0, 360, 0, 5)
+            particleSeer:create(inst.x, inst.y, 1)
+        end
+    end
+    if inst_data.duration < 10 then
+        inst.image_alpha = 0
+    end
     if inst_data.duration < 0 then
         inst:destroy()
     end
+    
 
 end)
 

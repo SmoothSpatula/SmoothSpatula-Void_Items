@@ -19,16 +19,6 @@ item:set_tier(ItemTier.find("Void"))
 object:set_sprite(-1)
 object:set_depth(-1)
 
-local particlePolylute = Particle.new("Polylute")
-particlePolylute:set_shape(7)
-particlePolylute:set_life(300, 300)
-particlePolylute:set_speed(0, 0, 0, 0)
-particlePolylute:set_size(0.1, 0.1, 0, 0.01)
-particlePolylute:set_scale(3, 0.5)
-particlePolylute:set_color2(Color.from_rgb(255, 255, 255), Color.from_rgb(87, 36, 94))
-particlePolylute:set_alpha3(1, 1, 0)
-particlePolylute:set_blend(0)
-
 local max_turn_radius = 2
 local max_turn_radius_low = 1.1
 local max_turn_radius_add = 0.5
