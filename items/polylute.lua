@@ -36,7 +36,7 @@ local distance_from_target = 20
 
 -- ===== Callbacks =====
 
-function generate_curve_points(radius, curvature, steps)
+function generate_curve_points(radius, curvature, steps, size_x, size_y)
     local points = {}
 
     -- generate random start point on circle around origin
@@ -85,7 +85,10 @@ function generate_curve_points(radius, curvature, steps)
         local u = 1 - t
         local lx = u*u*sx + 2*u*t*cx + t*t*ex
         local ly = u*u*sy + 2*u*t*cy + t*t*ey
-        points[#points + 1] = {x = lx, y = ly}
+
+        local scaled_x = math.floor(lx * size_x / 50)
+        local scaled_y = math.floor(ly * size_y / 50)
+        points[#points + 1] = {x = scaled_x, y = scaled_y}
     end
 
     return points
@@ -96,21 +99,23 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     if count <= 0 then return end --comment for testing or math.random(0, 99) > 25 then return end
 
     local actual_nb = math.min(count, 30) -- cap it or it lags quite a bit and looks worse
+    local inst = Instance.create(target.x, target.y, object)
+    local inst_data = Instance.get_data(inst)
+    inst_data.surface = -1
+    inst_data.duration = 25
+
+
+    local size_x = gm.sprite_get_width(target.sprite_index)
+    local size_y = gm.sprite_get_height(target.sprite_index)
+    inst_data.size_x = size_x
+    inst_data.size_y = size_y
+    local three_pts = {}
     for i=1, actual_nb do
-        local inst = Instance.create(target.x, target.y, object)
-        local inst_data = Instance.get_data(inst)
-        inst_data.surface = -1
-        inst_data.duration = 13
-
-        local three_pts = {}
-        three_pts[1] = generate_curve_points(15,3,12)
-        three_pts[2] = generate_curve_points(15,3,12)
-        three_pts[3] = generate_curve_points(15,3,12)
-        inst_data.three_pts = three_pts
-        inst_data.target = target
-
+        three_pts[i] = generate_curve_points(15,2,12, size_x, size_y)
     end
-
+    inst_data.three_pts = three_pts
+    inst_data.target = target
+    
     -- play animation and sound wooo
 end)
 
@@ -135,34 +140,46 @@ local COLOR_PINK = Color.from_rgb(188, 143, 143)
 
 Callback.add(object.ON_DRAW, function(inst)
     local inst_data = Instance.get_data(inst)
+    local size_x = inst_data.size_x
+    local size_y = inst_data.size_y
+
     if not Util.bool(gm.surface_exists(inst_data.surface)) then
-        inst_data.surface = gm.surface_create(100, 100)
+        inst_data.surface = gm.surface_create(size_x*2, size_y*2)
     else
         gm.surface_set_target(inst_data.surface)
-        --gm.draw_clear_alpha(Color.BLACK,0)
+        gm.draw_clear_alpha(Color.BLACK,0)
         gm.draw_set_color(Color.WHITE)
         
-        --for i = 1, #pts - 1 do
-        local i = 12 -  inst_data.duration
-        for j=1, 3 do
+        local i = 12 -  math.floor(inst_data.duration/2)
+        print(i)
+        for j=1, #inst_data.three_pts do
             local pts = inst_data.three_pts[j]
             gm.draw_set_color(Color.WHITE)
-            gm.draw_line(pts[i].x + 50, pts[i].y+50, pts[i + 1].x+50, pts[i + 1].y+50)
+
+            if i > 1 then 
+                gm.draw_line(pts[i-1].x + size_x, pts[i-1].y + size_y, pts[i].x+ size_x, pts[i].y + size_y)
+            end
+            gm.draw_line(pts[i].x + size_x, pts[i].y + size_y, pts[i + 1].x+ size_x, pts[i + 1].y + size_y)
+            if i < 12 then
+                gm.draw_line(pts[i+1].x + size_x, pts[i+1].y + size_y, pts[i + 2].x+ size_x, pts[i + 2].y + size_y)
+            end
+
+
             if i < 4 then
                 gm.draw_set_color(Color.WHITE)
-                gm.draw_circle(pts[1].x + 50, pts[1].y + 50, 4, false)
+                gm.draw_circle(pts[1].x + size_x, pts[1].y + size_y, 4, false)
                 gm.draw_set_color(Color.BLACK)
-                gm.draw_circle(pts[1].x + 50, pts[1].y + 50, 3, false)
-            elseif i < 8 then 
+                gm.draw_circle(pts[1].x + size_x, pts[1].y + size_y, 3, false)
+            elseif i < 7 then 
                 gm.draw_set_color(Color.FUCHSIA)
-                gm.draw_circle(pts[1].x + 50, pts[1].y + 50, 4, false)
+                gm.draw_circle(pts[1].x + size_x, pts[1].y + size_y, 4, false)
                 gm.draw_set_color(Color.WHITE)
-                gm.draw_circle(pts[#pts].x + 50, pts[#pts].y + 50, 4, false)
+                gm.draw_circle(pts[#pts].x + size_x, pts[#pts].y + size_y, 4, false)
                 gm.draw_set_color(Color.BLACK)
-                gm.draw_circle(pts[#pts].x + 50, pts[#pts].y + 50, 3, false)
+                gm.draw_circle(pts[#pts].x + size_x, pts[#pts].y + size_y, 3, false)
             elseif i < 13 then
                 gm.draw_set_color(Color.FUCHSIA)
-                gm.draw_circle(pts[#pts].x + 50, pts[#pts].y + 50, 4, false)
+                gm.draw_circle(pts[#pts].x + size_x, pts[#pts].y + size_y, 4, false)
             end
         end
     
@@ -170,13 +187,11 @@ Callback.add(object.ON_DRAW, function(inst)
     end
     gm.draw_set_alpha(1)
     -- change the x and y scale depending on the sprite size of the target
-    local xscale = gm.sprite_get_width(inst_data.target.sprite_index) / 50
-    local yscale = gm.sprite_get_height(inst_data.target.sprite_index) / 50
 
     gm.draw_surface_ext(inst_data.surface, 
-        inst_data.target.x - 50*xscale, 
-        inst_data.target.y -50*yscale, 
-        xscale, yscale, 
+        inst_data.target.x - size_x, 
+        inst_data.target.y - size_y, 
+        1, 1, 
         0, Color.WHITE, 1)
 end)
 
