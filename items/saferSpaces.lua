@@ -16,8 +16,6 @@ item:set_tier(ItemTier.find("Void"))
 
 -- ===== Callbacks =====
 
--- Tougher Times -> Safer Spaces -> Blocks incoming damage once. Recharges after 15 seconds (-10% per stack)
-
 Callback.add(item.on_acquired, function(actor, stack)
     actor:buff_apply(Buff.find("saferSpaces"), 1)
 end)
