@@ -20,7 +20,8 @@ item:set_tier(ItemTier.find("Void"))
 Callback.add(Callback.ON_SECOND, function()
     local actors = item:get_holding_actors()
     for _, actor in ipairs(actors) do
-        if actor.pHspeed > 0.0 or actor.pHspeed < 0.0 and not (actor.value.x_skill or actor.value.v_skill or actor.value.z_skill or actor.value.c_skill) then
+        if (math.abs(actor.pHspeed) > 0.0 and not (actor.value.x_skill or actor.value.v_skill or actor.value.z_skill or actor.value.c_skill)) 
+        or math.abs(actor.pHspeed) >= actor.pHmax - 0.2 then
             actor:heal(actor.maxhp * 0.02 * actor:item_count(item))
         end
     end
