@@ -28,6 +28,9 @@ return {
             name        = "Safer Spaces",
             pickup      = "Block the next source of damage. <p>Corrupts all Tougher Times.</c>",
             description = "<g>Blocks</c> incoming damage once. Recharges after <b>13.5 seconds</c> <c_stack>(-10% per stack)</c>. <p>Corrupts all Tougher Times.</c>",
+            destination = "",
+            date        = "",
+            story       = "\"You can't shoot me.\n\nYou can't taze me.\n\nYou can't gas me.\n\nYou can't even knock me down.\n\nNot without something very precious going squish.\"",
         },
 
         plasmaShrimp = {
