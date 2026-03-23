@@ -15,7 +15,7 @@ local particle_fungus_dist = 6
 local particle_life = 50
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.find("Void"))
+item:set_tier(ItemTier.find("voidCommon"))
 
 particleFungus_center:set_shape(1)
 particleFungus_center:set_life(particle_life, particle_life)

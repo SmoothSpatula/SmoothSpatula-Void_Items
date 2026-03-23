@@ -22,7 +22,7 @@ local effect_sprite = Sprite.new("item/seerEffect", "~/assets/sprites/effects/10
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.find("Void"))
+item:set_tier(ItemTier.find("voidCommon"))
 
 object:set_sprite(effect_sprite)
 effect_sprite:set_speed(1)

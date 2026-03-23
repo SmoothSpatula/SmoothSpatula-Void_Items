@@ -15,7 +15,7 @@ local sprite_explosion_effect = Sprite.new("effect/shrimpExplosionEf", "~/assets
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.find("Void"))
+item:set_tier(ItemTier.find("voidUncommon"))
 
 object:set_sprite(sprite_effect)
 object:set_depth(-10)

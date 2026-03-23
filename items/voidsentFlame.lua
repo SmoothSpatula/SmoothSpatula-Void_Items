@@ -12,7 +12,7 @@ local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/ef
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.find("Void"))
+item:set_tier(ItemTier.find("voidUncommon"))
 
 sprite_effect:set_speed(2)
 

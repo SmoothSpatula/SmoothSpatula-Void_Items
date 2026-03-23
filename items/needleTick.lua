@@ -13,7 +13,7 @@ local sprite = Sprite.new("item/needleTick", "~/assets/sprites/items/needleTick.
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.find("Void"))
+item:set_tier(ItemTier.find("voidCommon"))
 
 buff = Buff.find("collapseDebuff")
 buff_time = 180
