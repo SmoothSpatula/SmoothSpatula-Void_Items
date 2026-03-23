@@ -203,3 +203,6 @@ Callback.add(object.ON_DRAW, function(inst)
         0, Color.WHITE, 1)
 end)
 
+-- ===== Additional =====
+
+ItemLog.new_from_item(item)

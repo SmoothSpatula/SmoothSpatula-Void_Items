@@ -11,10 +11,10 @@
 ### Void Cradle 
 - needs an idle animation, an opening effect as well as an opening animation + sound
 
-### Ukulele -> polylute 
-- 25% chance to fire lightning for 60% TOTAL damage up to 3 (+3 per stack) times. Corrupts all Ukuleles. Single target on the 
-
 ## Code done
+
+### Ukulele -> polylute 
+- 25% chance to fire lightning for 60% TOTAL damage up to 3 (+3 per stack) times. Corrupts all Ukuleles.
 
 ### Dio's best friend -> Pluripotent Larva 
 -  Upon death, this item will be consumed and you will return to life with 3 seconds of invulnerability, and all of your items that can be corrupted will be
@@ -48,3 +48,16 @@
 ??? Encrusted Key, Newly Hatched Zoea, Singularity Band, Tentabauble -> these either don't have the original item or I'm not sure to be able to make them in the timeframe
 
 
+## More time = more ideas
+- void zone around cradles with (potentialy damage over time) and shader effect
+- redo lenses effect with shaders if motivated
+
+
+## Tasks
+- pluripotent Larva animation
+- plasma shrimp smoother trail and on hit effect
+- add all the sounds in
+- does weeping fungus have a visible effect?
+- mod icon art
+- 3 tiered cradles with seperate itemTiers and lootPools
+- math/memory optimisations

@@ -67,3 +67,7 @@ Callback.add(Callback.ON_STAGE_START, function()
         pool_list:destroy()
     end
 end)
+
+-- ===== Additional =====
+
+ItemLog.new_from_item(item)

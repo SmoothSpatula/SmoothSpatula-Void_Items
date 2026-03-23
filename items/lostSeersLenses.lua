@@ -84,6 +84,10 @@ Callback.add(object.on_step, function(inst)
 
 end)
 
+-- ===== Additional =====
+
+ItemLog.new_from_item(item)
+
 -- Callback.add(object.ON_DRAW, function(inst)
 --     local inst_data = Instance.get_data(inst)
 --     local size_x = inst_data.size_x

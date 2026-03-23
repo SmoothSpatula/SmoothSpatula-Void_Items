@@ -51,3 +51,6 @@ Hook.add_pre(gm.constants.actor_death, function(self, other, result, args)
     end
 end)
 
+-- ===== Additional =====
+
+ItemLog.new_from_item(item)

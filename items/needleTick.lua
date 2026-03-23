@@ -52,3 +52,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
 
     -- play animation and sound wooo
 end)
+
+-- ===== Additional =====
+
+ItemLog.new_from_item(item)
