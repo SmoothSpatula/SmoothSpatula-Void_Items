@@ -86,7 +86,7 @@ end
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
-    if count <= 0 or math.random(1, 100) > 25 then return end
+    if count <= 0 or math.random(1, 100) > 1000 then return end
 
     local actual_nb = math.min(count*3, 30) -- cap it or it lags quite a bit and looks worse
     local inst = Instance.create(target.x, target.y, object)
@@ -107,7 +107,11 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     inst_data.all_pts = all_pts
     inst_data.target = target
     inst_data.parent = attacker
-    
+    inst_data.angle = {}
+    for i = 0, 4 do
+        inst_data.angle[i*2+1] = math.cos(math.random() * 6.242) * 4
+        inst_data.angle[i*2+2] = math.sin(math.random() * 6.242) * 4
+    end
     -- play animation and sound wooo
 end)
 
@@ -135,12 +139,12 @@ Callback.add(object.on_step, function(inst)
 
 end)
 
--- duration is 15 frames
+-- duration is 25/2 frames
 -- 1-2 first circle appears black with border
--- 2-8 the line travels 
--- 9 second circle appears, first circle is pink
--- 12 line is disapearing, second circle is pink
--- 15 end
+-- 2-12 the line travels 
+-- 4 second circle appears, first circle is pink
+-- 7 line is disapearing, second circle is pink
+-- 12 end
 
 local COLOR_PINK = Color.from_rgb(188, 143, 143)
 
@@ -162,32 +166,39 @@ Callback.add(object.ON_DRAW, function(inst)
             gm.draw_set_color(Color.WHITE)
 
             if i > 1 then 
-                gm.draw_set_color(Color.PURPLE)
+                gm.draw_set_color(Color.WHITE)
                 gm.draw_line(pts[i-1].x + size_x, pts[i-1].y + size_y, pts[i].x+ size_x, pts[i].y + size_y)
             end
-                gm.draw_set_color(Color.WHITE)
-                gm.draw_line(pts[i].x + size_x, pts[i].y + size_y, pts[i + 1].x+ size_x, pts[i + 1].y + size_y)
+            gm.draw_set_color(Color.WHITE)
+            gm.draw_line(pts[i].x + size_x, pts[i].y + size_y, pts[i + 1].x+ size_x, pts[i + 1].y + size_y)
             if i < 12 then
-                gm.draw_set_color(Color.WHITE)
+                gm.draw_set_color(Color.PURPLE)
                 gm.draw_line(pts[i+1].x + size_x, pts[i+1].y + size_y, pts[i + 2].x+ size_x, pts[i + 2].y + size_y)
             end
 
-            if i < 4 then
+            if i < 4 then -- first circle
                 gm.draw_set_color(Color.WHITE)
                 gm.draw_circle(pts[1].x + size_x, pts[1].y + size_y, 4, false)
                 gm.draw_set_color(Color.BLACK)
                 gm.draw_circle(pts[1].x + size_x, pts[1].y + size_y, 3, false)
-            elseif i < 7 then 
+            elseif i < 7 then -- both circles
                 gm.draw_set_color(Color.FUCHSIA)
                 gm.draw_circle(pts[1].x + size_x, pts[1].y + size_y, 4, false)
                 gm.draw_set_color(Color.WHITE)
                 gm.draw_circle(pts[#pts].x + size_x, pts[#pts].y + size_y, 4, false)
                 gm.draw_set_color(Color.BLACK)
                 gm.draw_circle(pts[#pts].x + size_x, pts[#pts].y + size_y, 3, false)
-            elseif i < 13 then
+            elseif i < 13 then -- second circle and explosion lines
+                local angle = inst_data.angle
                 gm.draw_set_color(Color.FUCHSIA)
-                gm.draw_circle(pts[#pts].x + size_x, pts[#pts].y + size_y, 4, false)
-                
+                gm.draw_circle(pts[#pts].x + size_x, pts[#pts].y + size_y, 4, false) 
+
+                gm.draw_set_color(Color.FUCHSIA)
+                for k = 0, 4 do
+                    gm.draw_line(pts[#pts].x + size_x, pts[#pts].y + size_y, 
+                        pts[#pts].x + size_x + inst_data.angle[k*2+1] * (i-7),
+                        pts[#pts].y + size_y + inst_data.angle[k*2+2] * (i-7))
+                end
             end
         end
     
