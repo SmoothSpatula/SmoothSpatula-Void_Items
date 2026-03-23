@@ -87,8 +87,6 @@ Callback.add(obj.on_step, function(inst)
                 break
             end
         end
-
-        print(index)
         
         local pool = loot_pools[index]
         local item, pickup = pool:roll()
