@@ -1,24 +1,19 @@
-local sCradle = Sprite.new("voidCradle", "~/assets/sprites/objects/voidCradle.png", 1, 10, 25)
+-- Void Cradle
 
-local itemTier = ItemTier.find("Void")
-local lootPool = LootPool.new_from_tier(itemTier) -- doesnt add the items
+local spr_cradle = Sprite.new("voidCradle", "~/assets/sprites/objects/voidCradle.png", 10, 16, 36)
 
--- lootPool:add_item(Item.find("pluripotentLarva")) dont work
+local item_tier = ItemTier.find("Void")
+local loot_pool = LootPool.new_from_tier(item_tier)
 
-local lootList = List.wrap(lootPool.available_drop_pool)
+local spawn_cost    = 65
+local spawn_weight  = 3
+local spawn_rarity  = 1
 
-for k, v in pairs(corruptions) do
-    lootList:add(Item.find(v).object_id)
-end
-
-local spawn_cost            = 10
-local spawn_weight          = 4
-local spawn_rarity          = 1
 
 -- ========== Objects ==========
 
 local obj = Object.new("voidCradle", Object.Parent.INTERACTABLE)
-obj:set_sprite(sCradle)
+obj:set_sprite(spr_cradle)
 obj:set_depth(1)
 
 local card = InteractableCard.new("voidCradle")
@@ -30,53 +25,56 @@ card.spawn_weight                   = spawn_weight
 card.default_spawn_rarity_override  = spawn_rarity
 card.decrease_weight_on_spawn       = true
 
+
+-- ========== Particles ==========
+
+local spr_fire = Sprite.new("voidCradleFire", "~/assets/sprites/effects/sEfFireyVoid.png", 7, 4, 10)
+
+local part_fire = Particle.new("voidCradleFire")
+part_fire:set_sprite(spr_fire, true, true, false)
+part_fire:set_size(0.6, 1, 0, 0)
+part_fire:set_scale(2, 1)
+part_fire:set_life(25, 30)
+part_fire:set_speed(0.5, 1, -0.03, 0)
+part_fire:set_direction(-180, 180, 0, 1)
+part_fire:set_orientation(0, 0, 0, 0, 1)
+
+
 -- ========== Callbacks ==========
 
 Callback.add(obj.on_create, function(inst)
-    --inst.is_scrapper = true     -- Flag for other crate-related mods
+    inst:interactable_init()
+    inst:interactable_init_name()
+
     inst.cost = 0.5
-    inst.cost_type = 2.0
+    inst.cost_type = 2  -- hp
 
     -- Set prompt text
-    inst.translation_key = "interactable.voidCradle"
-    inst.text = gm.translate(inst.translation_key..".text")
-end)
-
-Hook.add_pre(gm.constants.interactable_check_cost, function(self, other, result, args)
-    --print("test")
+    -- inst.translation_key = "interactable.voidCradle"
+    -- inst.text = gm.translate(inst.translation_key..".text")
 end)
 
 Hook.add_post(gm.constants.interactable_pay_cost, function(self, other, result, args)
     if self:get_object_index() ~= obj.value then return end
-
-    local inst_data = Instance.get_data(self)
-    local actor = args[3].value
-
-    print(lootPool:roll())
-    local item, pickup = lootPool:roll() -- the pickup from this doesnt work?
-    print(pickup.value)
-    local pickup = Object.wrap(item.object_id)
-    pickup:create(self.x, self.y)
-    result.value = false
-    self.active = 2.0
-
-    -- change the sprite to get the opening animation before it destroys itself
-    Alarm.add(10, function(self) self:destroy() end, self)
+    self.image_speed = 0.25
 end)
 
-Hook.add_pre(gm.constants.run_create, function(self, other, result, args)
-    local stages =Stage.find_all()
-    for id=0, #stages-1 do
-        local stage = Stage.wrap(id)
-        stage:add_interactable(card)
+Callback.add(obj.on_step, function(inst)
+    if inst.active == 2 and inst.image_index >= 9 then
+        local item, pickup = loot_pool:roll()
+        local pos = Vector(inst.x, inst.y - 16)
+        pickup:create(pos.x, pos.y)
+        part_fire:create(pos.x, pos.y, 6)
+        inst:destroy()
     end
 end)
 
--- local oP = Instance.find(gm.constants.oP)
-
--- obj:create(oP.x, oP.y)
-
--- print(gm.object_get_name(gm.object_get_parent(gm.constants.oCustomObject_pInteractable)))
+Hook.add_pre(gm.constants.run_create, function(self, other, result, args)
+    local stages = Stage.find_all()
+    for _, stage in ipairs(stages) do
+        stage:add_interactable(card)
+    end
+end)
 
 
 -- ========== Command ==========

@@ -45,7 +45,7 @@ DamageDodge.add(function(api, current_dodge)
 
     local item = Item.find("saferSpaces")
     local cd = 13.5 * (0.9 ^ (actor:item_count(item) - 1)) * 60
-    Alarm.add(math.max(math.floor(cd), 1), function()
+    Alarm.add(cd, function()
         if not Instance.exists(actor) then return end
         actor:buff_apply(buff, 1)
     end)
