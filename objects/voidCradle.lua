@@ -20,9 +20,9 @@ end
 -- The game has a TreasureWeights struct
 -- but honestly it's not needed
 local treasure_weights = {
-    60, -- Common    60 %
-    30, -- Uncommon  30 %
-        -- Rare      10 %
+    60, -- Common
+    30, -- Uncommon
+    10, -- Rare
 }
 
 
@@ -87,6 +87,8 @@ Callback.add(obj.on_step, function(inst)
                 break
             end
         end
+
+        print(index)
         
         local pool = loot_pools[index]
         local item, pickup = pool:roll()
