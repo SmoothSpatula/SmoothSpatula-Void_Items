@@ -5,6 +5,9 @@ local item = Item.new("plasmaShrimp")
 local object = Object.new("shrimpMissileObject")
 
 local particleShrimp = Particle.new("Shrimp")
+local particleCircle = Particle.new("ShrimpCircle")
+local particleCircle2 = Particle.new("ShrimpCircle2")
+local particleLine = Particle.new("ShrimpLines")
 
 -- ===== Assets =====
 
@@ -24,9 +27,36 @@ particleShrimp:set_shape(7)
 particleShrimp:set_life(10, 10)
 particleShrimp:set_speed(0, 0, 0, 0)
 particleShrimp:set_size(0.1, 0.1, 0, 0)
-particleShrimp:set_color2(Color.from_rgb(87, 36, 94), Color.from_rgb(227, 111, 200))
+particleShrimp:set_color3(Color.from_rgb(233, 40, 72),Color.from_rgb(87, 36, 94) , Color.from_rgb(87, 36, 94))
 particleShrimp:set_alpha3(1, 1, 0)
 particleShrimp:set_blend(0)
+
+particleCircle:set_shape(5) -- circle
+particleCircle:set_life(15, 20)
+particleCircle:set_speed(0, 0, 0, 0)
+particleCircle:set_scale(2,2)
+particleCircle:set_size(0.05, 0.05, 0.03, 0)
+particleCircle:set_color3(Color.from_rgb(87, 36, 94), Color.WHITE, Color.from_rgb(87, 36, 94))
+particleCircle:set_alpha3(1, 1, 1)
+particleCircle:set_blend(0)
+
+particleCircle2:set_shape(1) -- disk
+particleCircle2:set_life(10, 10)
+particleCircle2:set_speed(0, 0, 0, 0)
+particleCircle2:set_scale(1, 1)
+particleCircle2:set_size(0.5, 0.5, -0.04, 0)
+particleCircle2:set_color1(Color.from_rgb(225, 214, 242))
+particleCircle2:set_alpha3(1, 1, 0)
+particleCircle2:set_blend(0)
+
+particleLine:set_shape(3) -- line
+particleLine:set_life(10, 10)
+particleLine:set_speed(0, 0, 0, 0)
+particleLine:set_scale(1, 0.3)
+particleLine:set_size(0, 0, 0.07, 0)
+particleLine:set_color2(Color.from_rgb(233, 40, 72), Color.from_rgb(54, 28, 92) )
+particleLine:set_alpha3(1, 1, 1)
+particleLine:set_blend(0)
 
 local max_turn_radius = 2.5
 local start_distance = 40 -- change this to whatever distance you want
@@ -53,7 +83,6 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     if stack <= 0 or attacker.shield <= 0 then return end
     
     local shrimp_x, shrimp_y, shrimp_angle, shrimp_speed = shrimp_pos_angle_speed(attacker, target)
-    print(shrimp_pos_angle_speed(attacker, target))
 
     shrimp_inst = Instance.create(shrimp_x, shrimp_y, object)
     local inst_data = Instance.get_data(shrimp_inst)
@@ -111,6 +140,15 @@ Callback.add(object.on_step, function(inst)
     if dist < 10 then
         if Instance.exists(inst_data.target) then
             inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false)
+            particleCircle2:create(inst.x, inst.y, 1)
+            particleCircle:create(inst.x, inst.y, 1)
+            for k = 1, 3 do
+                local orientation = math.random() * 360
+                particleLine:set_orientation(orientation, orientation, 0, 0, 0)
+                particleLine:create(inst.x, inst.y, 1)
+            end
+            
+
         end
         inst:destroy()
         return
@@ -120,7 +158,6 @@ Callback.add(object.on_step, function(inst)
     if inst_data.duration < 0 then
         inst:destroy()
     end
-
 end)
 
 -- ===== Additional =====
