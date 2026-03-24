@@ -6,14 +6,6 @@ local particleSeer = Particle.new("lostSeersLensesParticle")
 
 -- ===== Assets =====
 
--- when shaders get fixed this will work
--- print(path.combine(_ENV["!plugins_mod_folder_path"], "shaders", "void_explosion"))
--- local shd_void_explosion = gm.shader_add(path.combine(_ENV["!plugins_mod_folder_path"], "shaders", "void_explosion"), "shd_void_explosion")
-
--- local _uni_time  = gm.shader_get_uniform(shd_void_explosion, "u_time")
--- local _uni_scale = gm.shader_get_uniform(shd_void_explosion, "u_scale")
--- local _uni_seed  = gm.shader_get_uniform(shd_void_explosion, "u_seed")
-
 local sprite = Sprite.new("item/lostSeersLenses", "~/assets/sprites/items/lostSeersLenses.png", 1, 16, 16)
 
 local effect_sprite = Sprite.new("item/seerEffect", "~/assets/sprites/effects/100x108frames30.png", 30, 50, 54)

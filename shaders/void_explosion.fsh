@@ -17,52 +17,41 @@ struct Fragment
     float2 vCoord    : TEXCOORD0;
 };
 
-uniform float Tranzitioner;
-uniform float ShaderStrength;
-uniform float OutlineThreshold;
-uniform float OutlineSmoothness;
-uniform float OutlineStrength;
-uniform float3 ShaderAccent;
+#define MAX_BULGES 10
+uniform float4 bulgeUVs[MAX_BULGES];
+uniform int numBulges;
+// uniform float ShaderStrength;
+// uniform float OutlineThreshold;
+// uniform float OutlineSmoothness;
+// uniform float OutlineStrength;
+// uniform float3 ShaderAccent;
 
-float3 RGBToGrayscale(float3 color)
-{
-    return dot(color, float3(0.299f, 0.587f, 0.114f));
+float2 coord_warp(float2 uv, float2 resolution, float4 bulgeUVs[MAX_BULGES], out float mask){
+    float2 pixel = uv * resolution;
+    float radius = 200.0f;
+
+    for (int i = 0; i< numBulges; i++){
+        float2 offset = pixel - bulgeUVs[i].xy; // use .xy
+        float dist = length(offset);
+        float localMask = saturate((radius - dist) / radius);
+        mask = max(mask, localMask);
+        pixel += offset * localMask * ( - bulgeUVs[i].z / 15);
+    }
+    return pixel / resolution;
 }
 
-float plot(float2 st) {
-    return smoothstep(Tranzitioner * 2.4, Tranzitioner * 2.4 - 0.5, abs(st.y));
-}
 
 float4 main(Fragment INPUT) : SV_Target0 {
-    float4 baseColor = gm_BaseTextureObject.Sample(gm_BaseTexture, INPUT.vCoord);
-    float3 outlineColor = ShaderAccent;
-    
     float2 textureDimensions;
     gm_BaseTextureObject.GetDimensions(textureDimensions.x, textureDimensions.y);
-    float2 texelSize = 1.0f / textureDimensions;
 
-    float4 colorL = gm_BaseTextureObject.Sample(gm_BaseTexture, INPUT.vCoord - float2(texelSize.x, 0.0f));
-    float4 colorR = gm_BaseTextureObject.Sample(gm_BaseTexture, INPUT.vCoord + float2(texelSize.x, 0.0f));
-    float4 colorUp = gm_BaseTextureObject.Sample(gm_BaseTexture, INPUT.vCoord + float2(0.0f, texelSize.y));
-    float4 colorDown = gm_BaseTextureObject.Sample(gm_BaseTexture, INPUT.vCoord - float2(0.0f, texelSize.y));
+    float mask;
+    float2 warpedUV = coord_warp(INPUT.vCoord, textureDimensions, bulgeUVs, mask);
+    float4 baseColor = gm_BaseTextureObject.Sample(gm_BaseTexture, warpedUV);
+    //float3 purple = float3(0.6f, 0.2f, 0.8f);
+    //baseColor.rgb = lerp(baseColor.rgb, purple, mask * 0.4f);
 
-    float lumBase = RGBToGrayscale(baseColor.rgb);
-    float lumL = RGBToGrayscale(colorL.rgb);
-    float lumR = RGBToGrayscale(colorR.rgb);
-    float lumUp = RGBToGrayscale(colorUp.rgb);
-    float lumDown = RGBToGrayscale(colorDown.rgb);
+    
 
-    float deltaX = abs(lumR - lumL);
-    float deltaY = abs(lumUp - lumDown);
-
-    float edgeStrength = length(float2(deltaX, deltaY)) * ShaderStrength;
-    float outlineFactor = smoothstep(OutlineThreshold - OutlineSmoothness, OutlineThreshold + OutlineSmoothness, edgeStrength);
-    float3 detectedOutlineColor = lerp(float3(0.0f, 0.0f, 0.0f), outlineColor, outlineFactor * OutlineStrength);
-    float3 finalDisplayedColor = baseColor.rgb;
-    finalDisplayedColor = lerp(finalDisplayedColor, detectedOutlineColor, outlineFactor * OutlineStrength);
-
-    float pct = plot(INPUT.vCoord.xy);
-    finalDisplayedColor = lerp(finalDisplayedColor, detectedOutlineColor, pct);
-
-    return float4(finalDisplayedColor, baseColor.a);
+    return baseColor;
 }

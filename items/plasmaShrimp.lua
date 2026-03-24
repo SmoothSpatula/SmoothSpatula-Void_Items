@@ -44,16 +44,16 @@ particleCircle2:set_shape(1) -- disk
 particleCircle2:set_life(10, 10)
 particleCircle2:set_speed(0, 0, 0, 0)
 particleCircle2:set_scale(1, 1)
-particleCircle2:set_size(0.5, 0.5, -0.04, 0)
+particleCircle2:set_size(0.5, 0.5, 0, 0)
 particleCircle2:set_color1(Color.from_rgb(225, 214, 242))
 particleCircle2:set_alpha3(1, 1, 0)
 particleCircle2:set_blend(0)
 
-particleLine:set_shape(3) -- line
+particleLine:set_shape(1) -- line
 particleLine:set_life(10, 10)
 particleLine:set_speed(0, 0, 0, 0)
-particleLine:set_scale(1, 0.3)
-particleLine:set_size(0, 0, 0.07, 0)
+particleLine:set_scale(1, 0.1)
+particleLine:set_size(0, 0, 0.15, 0)
 particleLine:set_color2(Color.from_rgb(233, 40, 72), Color.from_rgb(54, 28, 92) )
 particleLine:set_alpha3(1, 1, 1)
 particleLine:set_blend(0)
@@ -142,13 +142,11 @@ Callback.add(object.on_step, function(inst)
             inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false)
             particleCircle2:create(inst.x, inst.y, 1)
             particleCircle:create(inst.x, inst.y, 1)
-            for k = 1, 3 do
-                local orientation = math.random() * 360
-                particleLine:set_orientation(orientation, orientation, 0, 0, 0)
-                particleLine:create(inst.x, inst.y, 1)
-            end
-            
-
+            local orientation = math.random() * 360
+            particleLine:set_orientation(orientation, orientation, 0, 0, 0)
+            particleLine:create(inst.x, inst.y, 1)
+            particleLine:set_orientation(orientation+ 90, orientation+90, 0, 0, 0)
+            particleLine:create(inst.x, inst.y, 1)
         end
         inst:destroy()
         return

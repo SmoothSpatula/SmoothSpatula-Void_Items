@@ -12,18 +12,41 @@ local sprite = Sprite.new("item/pluripotentLarva", "~/assets/sprites/items/pluri
 item:set_sprite(sprite)
 item:set_tier(ItemTier.find("voidRare"))
 
+local is_reviving = false
+local revivingUVs = {}
+--revivingUVs[1] = {500, 500, 1000, 0}
+
 -- ===== Callbacks =====
 
 
 Hook.add_pre(gm.constants.actor_death, function(self, other, result, args)
     
     if self:item_count(item) <= 0 then return end
+
     if self.hp <= 0 then 
         self:heal(self.maxhp) 
         self.invincible = 180 
         self:item_take(item)
         --self:item_give(used_item)
-        gm.__rpc_item_proc_dios_friend_implementation__(self.value)
+        --gm.__rpc_item_proc_dios_friend_implementation__(self.value)
+        
+        
+        local cam = Global.view_camera
+        local camX, camY = gm.camera_get_view_x(cam), gm.camera_get_view_y(cam)
+        local camWidth, camHeight = gm.camera_get_view_width(cam), gm.camera_get_view_height(cam)
+
+        -- Screen resolution
+        local screenWidth, screenHeight = gm.display_get_width(), gm.display_get_height()
+
+        -- World → screen (top-left = 0,0)
+        local screenX = (self.x - camX) --/ camWidth * screenWidth
+        local screenY = (self.y - camY) --/ camHeight * screenHeight
+
+        print(screenX, screenY)
+
+        --print(screenX, screenY)
+        revivingUVs[self.id] = {screenX, screenY, 60, 1} -- time and scale
+
         -- add new animation
 
         for og, crpt in pairs(corruptions) do
@@ -50,6 +73,69 @@ Hook.add_pre(gm.constants.actor_death, function(self, other, result, args)
         return false
     end
 end)
+
+
+-- ===== Shaders =====
+
+--local shd_void_explosion = gm.find_shader_by_name("shd_void_explosion")
+
+local shd_void_explosion = gm.shader_add(path.combine(_ENV["!plugins_mod_folder_path"], "shaders", "void_explosion"), "shd_void_explosion")
+
+local _uni_uvs = gm.shader_get_uniform(shd_void_explosion, "bulgeUVs")
+local _uni_nb = gm.shader_get_uniform(shd_void_explosion, "numBulges")
+
+local my_surface = gm.surface_create(1920, 1080)
+gm.post_code_execute("gml_Object_oInit_Draw_73", function()
+    -- if not time_dilation_flag then
+    --     return
+    -- end
+
+
+    local application_surface = gm.variable_global_get("application_surface")
+    if gm.surface_exists(application_surface) then
+        
+        local app_surf_w = gm.surface_get_width(application_surface)
+        local app_surf_h = gm.surface_get_height(application_surface)
+        if not gm.surface_exists(my_surface) then
+            my_surface = gm.surface_create(app_surf_w, app_surf_h)
+        elseif app_surf_w ~= gm.surface_get_width(my_surface) or app_surf_h ~= gm.surface_get_height(my_surface) then
+            gm.surface_free(my_surface)
+            my_surface = gm.surface_create(app_surf_w, app_surf_h)
+        end
+
+        -- max number of bulges
+        local MAX_BULGES = 10
+
+        -- initialize a numeric array
+        local flat = gm.array_create(MAX_BULGES * 4, 0)  -- fills with 0
+
+        local count = 0
+        for id, b in pairs(revivingUVs) do
+            if count >= MAX_BULGES then break end
+            gm.array_set(flat, count*4 + 0, b[1] or 0) -- x
+            gm.array_set(flat, count*4 + 1, b[2] or 0) -- y
+            gm.array_set(flat, count*4 + 2, b[3] or 0) -- time
+            gm.array_set(flat, count*4 + 3, b[4] or 0)-- size
+            count = count + 1
+
+            -- optionally remove expired bulges
+            revivingUVs[id][3] = b[3] - 1
+            if b[3] < 0 then
+                revivingUVs[id] = nil
+            end
+        end
+
+        gm.surface_set_target(my_surface)
+        gm.shader_set(shd_void_explosion)
+        gm.shader_set_uniform_f_array(_uni_uvs, flat)
+        gm.shader_set_uniform_i(_uni_nb, count)
+        gm.draw_surface(application_surface, 0, 0)
+        gm.shader_reset()
+        gm.surface_reset_target()
+        gm.surface_copy(application_surface, 0, 0, my_surface)
+    end
+end)
+
 
 -- ===== Additional =====
 
