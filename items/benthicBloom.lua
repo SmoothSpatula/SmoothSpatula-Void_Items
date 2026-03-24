@@ -10,7 +10,7 @@ local sprite = Sprite.new("item/benthicBloom", "~/assets/sprites/items/benthicBl
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.find("Void"))
+item:set_tier(ItemTier.find("voidUncommon"))
 
 
 -- ===== Callbacks =====

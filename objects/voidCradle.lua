@@ -2,12 +2,28 @@
 
 local spr_cradle = Sprite.new("voidCradle", "~/assets/sprites/objects/voidCradle.png", 10, 16, 36)
 
-local item_tier = ItemTier.find("Void")
-local loot_pool = LootPool.new_from_tier(item_tier)
-
 local spawn_cost    = 65
 local spawn_weight  = 3
 local spawn_rarity  = 1
+
+-- Create loot pools
+local loot_pools = {}
+for i, identifier in ipairs{
+    "voidCommon",
+    "voidUncommon",
+    "voidRare",
+} do
+    local tier = ItemTier.find(identifier)
+    loot_pools[i] = LootPool.new_from_tier(tier)
+end
+
+-- The game has a TreasureWeights struct
+-- but honestly it's not needed
+local treasure_weights = {
+    60, -- Common
+    30, -- Uncommon
+    10, -- Rare
+}
 
 
 -- ========== Objects ==========
@@ -61,10 +77,24 @@ end)
 
 Callback.add(obj.on_step, function(inst)
     if inst.active == 2 and inst.image_index >= 9 then
-        local item, pickup = loot_pool:roll()
+        local rng = math.random(1, 100)
+        local index = 0
+        local sum = 0
+        for i, weight in ipairs(treasure_weights) do
+            sum = sum + weight
+            if rng <= sum then
+                index = i
+                break
+            end
+        end
+        
+        local pool = loot_pools[index]
+        local item, pickup = pool:roll()
+
         local pos = Vector(inst.x, inst.y - 16)
         pickup:create(pos.x, pos.y)
         part_fire:create(pos.x, pos.y, 6)
+
         inst:destroy()
     end
 end)
@@ -80,9 +110,10 @@ end)
 -- ========== Command ==========
 
 Console.new{
-    "spawn_cradle",
+    "spawn_cradle [count]",
     {
-        "Spawns a void cradle at the current mouse position."
+        "Spawns a void cradle(s) at the current mouse position.",
+        {"[count]", "number", "The number of cradles to spawn. <y>1</c> by default."},
     },
     function(args)
         if Net.client then
@@ -90,8 +121,13 @@ Console.new{
             return
         end
 
+        local count = 1
+        if type(args[1]) == "number" then
+            count = args[1]
+        end
+
         local x, y = Global.mouse_x, Global.mouse_y
-        for i = 1, (count or 1) do
+        for i = 1, count do
             Instance.create(x, y, obj)
         end
     end

@@ -22,28 +22,29 @@ corruptions = {
 corruptions["56LeafClover"] = "benthicBloom" --freaking lua man, malformed number near '56L'
 
 
-
-
-
 Initialize.add_hotloadable(function()    
-    
+    -- Create item tiers
+    for _, identifier in ipairs{
+        "voidCommon",
+        "voidUncommon",
+        "voidRare",
+    } do
+        local tier = ItemTier.new(identifier)
+        tier.text_color = "p"
+    end
 
-    local itemTier = ItemTier.new("Void")
-    itemTier.text_color = "p"
     -- Require all files in content folders
     local folders = {
         "items",
         "buffs",
         "objects",
     }
-
     for _, folder in ipairs(folders) do
         local names = path.get_files(path.combine(PATH, folder))
         for _, name in ipairs(names) do require(name) end
     end
 
-
-    -- corruption logic
+    -- Corruption logic
     Callback.add(Callback.ON_PICKUP_COLLECTED, function(pickup, actor)
         --Instance.wrap(pickup):print_variables()
         local item = Item.wrap(pickup.item_id)

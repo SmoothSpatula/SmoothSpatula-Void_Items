@@ -9,7 +9,7 @@ local sprite = Sprite.new("item/lysateCell", "~/assets/sprites/items/lysateCell.
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.find("Void"))
+item:set_tier(ItemTier.find("voidUncommon"))
 
 -- ===== Callbacks =====
 

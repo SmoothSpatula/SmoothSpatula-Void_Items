@@ -14,7 +14,7 @@ local sprite_effect = Sprite.new("effect/polyluteOrb", "~/assets/sprites/effects
 -- ===== Properties =====
 
 item:set_sprite(sprite)
-item:set_tier(ItemTier.find("Void"))
+item:set_tier(ItemTier.find("voidUncommon"))
 
 object:set_sprite(-1)
 object:set_depth(-1)
