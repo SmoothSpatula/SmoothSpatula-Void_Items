@@ -21,28 +21,32 @@ struct Fragment
 uniform float4 UVS[MAX_UVS];
 uniform int NUM_UVS;
 
-float2 coord_warp(float2 uv, float2 resolution, float4 UVS[MAX_UVS], out float mask){
-    float2 pixel = uv * resolution;
-    float radius = 200.0f;
-
-    for (int i = 0; i< NUM_UVS; i++){
-        float2 offset = pixel - UVS[i].xy;
-        float dist = length(offset);
-        float localMask = saturate((radius - dist) / radius);
-        mask = max(mask, localMask);
-        pixel += offset * localMask * ( - UVS[i].z / 15);
-    }
-    return pixel / resolution;
-}
-
 float4 main(Fragment INPUT) : SV_Target0 {
     float2 textureDimensions;
     gm_BaseTextureObject.GetDimensions(textureDimensions.x, textureDimensions.y);
 
-    float mask;
-    float2 warpedUV = coord_warp(INPUT.vCoord, textureDimensions, UVS, mask);
+    float2 pixel = INPUT.vCoord * textureDimensions;
+
+    float radius = 200.0f;
+    float3 purple = float3(0.6f, 0.2f, 0.8f);
+
+    float3 colorAccum = float3(0.0, 0.0, 0.0);
+    for (int i = 0; i < NUM_UVS; i++){
+        float2 offset = pixel - UVS[i].xy;
+        float dist = length(offset);
+
+        float localMask = saturate((radius - dist) / radius);
+
+        localMask = smoothstep(0.0, 1.0, localMask);
+        localMask = pow(localMask, 3.0);
+        pixel += offset * localMask * (-UVS[i].z / 15);
+        colorAccum += purple * localMask * UVS[i].z / 60.0f;
+    }
+
+    float2 warpedUV = pixel / textureDimensions;
     float4 baseColor = gm_BaseTextureObject.Sample(gm_BaseTexture, warpedUV);
-    //float3 purple = float3(0.6f, 0.2f, 0.8f);
-    //baseColor.rgb = lerp(baseColor.rgb, purple, mask * 0.4f);
+
+    baseColor.rgb += colorAccum;
+
     return baseColor;
 }

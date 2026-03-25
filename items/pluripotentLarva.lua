@@ -6,7 +6,7 @@ local item_used = Item.new("pluripotentLarvaUsed")
 -- ===== Assets =====
 
 local sprite = Sprite.new("item/pluripotentLarva", "~/assets/sprites/items/pluripotentLarva.png", 1, 16, 16)
-local sprite_used = Sprite.new("item/pluripotentLarva", "~/assets/sprites/items/pluripotentLarva.png", 1, 16, 16)
+local sprite_used = Sprite.new("item/pluripotentLarvaUsed", "~/assets/sprites/items/pluripotentLarvaUsed.png", 1, 16, 16)
 
 -- ===== Properties =====
 
@@ -16,10 +16,18 @@ item_used:set_sprite(sprite_used)
 
 local reviving_count = 0
 local revivingUVs = {}
---revivingUVs[1] = {500, 500, 1000, 0}
 
 -- ===== Callbacks =====
 
+
+function get_pixel_position(inst)
+    local cam = Global.view_camera
+    local camX, camY = gm.camera_get_view_x(cam), gm.camera_get_view_y(cam)
+    local camWidth, camHeight = gm.camera_get_view_width(cam), gm.camera_get_view_height(cam)
+
+    local screenWidth, screenHeight = gm.display_get_width(), gm.display_get_height()
+    return (inst.x - camX), (inst.y - camY) -- camHeight * screenHeight
+end
 
 Hook.add_pre(gm.constants.actor_death, function(self, other, result, args)
     
@@ -29,26 +37,10 @@ Hook.add_pre(gm.constants.actor_death, function(self, other, result, args)
         self:heal(self.maxhp) 
         self.invincible = 180 
         self:item_take(item)
-        --self:item_give(used_item)
+        self:item_give(item_used)
         
-        local cam = Global.view_camera
-        local camX, camY = gm.camera_get_view_x(cam), gm.camera_get_view_y(cam)
-        local camWidth, camHeight = gm.camera_get_view_width(cam), gm.camera_get_view_height(cam)
-
-        -- Screen resolution
-        local screenWidth, screenHeight = gm.display_get_width(), gm.display_get_height()
-
-        -- World → screen (top-left = 0,0)
-        local screenX = (self.x - camX) --/ camWidth * screenWidth
-        local screenY = (self.y - camY) --/ camHeight * screenHeight
-
-        print(screenX, screenY)
-
-        --print(screenX, screenY)
-        revivingUVs[self.id] = {screenX, screenY, 60, 1} -- time and scale
+        revivingUVs[self.id] = {self, 60, 1} -- time and scale
         reviving_count = reviving_count + 1
-
-        -- add new animation
 
         for og, crpt in pairs(corruptions) do
             local original = Item.find(og)
@@ -78,12 +70,7 @@ end)
 
 -- ===== Shaders =====
 
-local shd_void_explosion = gm.find_shader_by_name("shd_void_explosion")
-if shd_void_explosion > -1 then
-    --gm.shader_replace(path.combine(_ENV["!plugins_mod_folder_path"], "shaders", "void_explosion"), "shd_void_explosion", shd_void_explosion)
-else
-    shd_void_explosion = gm.shader_add(path.combine(_ENV["!plugins_mod_folder_path"], "shaders", "void_explosion"), "shd_void_explosion")
-end
+local shd_void_explosion = gm.shader_add(path.combine(_ENV["!plugins_mod_folder_path"], "shaders", "void_explosion"), "shd_void_explosion")
 
 local _uni_uvs = gm.shader_get_uniform(shd_void_explosion, "UVS")
 local _uni_nb = gm.shader_get_uniform(shd_void_explosion, "NUM_UVS")
@@ -109,14 +96,15 @@ gm.post_code_execute("gml_Object_oInit_Draw_73", function()
         local count = 0
         for id, b in pairs(revivingUVs) do
             if count >= MAX_UVS then break end
-            gm.array_set(flat, count*4 + 0, b[1] or 0) -- x
-            gm.array_set(flat, count*4 + 1, b[2] or 0) -- y
-            gm.array_set(flat, count*4 + 2, b[3] or 0) -- time
-            gm.array_set(flat, count*4 + 3, b[4] or 0) -- size or padding
+            screenX, screenY = get_pixel_position(b[1])
+            gm.array_set(flat, count*4 + 0, screenX or 0) -- x
+            gm.array_set(flat, count*4 + 1, screenY or 0) -- y
+            gm.array_set(flat, count*4 + 2, b[2] or 0) -- time
+            gm.array_set(flat, count*4 + 3, b[3] or 0) -- size or padding
             count = count + 1
 
-            revivingUVs[id][3] = b[3] - 1
-            if b[3] < 0 then
+            revivingUVs[id][2] = b[2] - 1
+            if b[2] < 0 then
                 revivingUVs[id] = nil
             end
         end
