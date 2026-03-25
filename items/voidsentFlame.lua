@@ -14,7 +14,7 @@ local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/ef
 item:set_sprite(sprite)
 item:set_tier(ItemTier.find("voidUncommon"))
 
-sprite_effect:set_speed(2)
+sprite_effect:set_speed(1.5)
 
 -- ===== Callbacks =====
 
