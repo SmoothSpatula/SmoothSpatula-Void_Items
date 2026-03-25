@@ -23,11 +23,15 @@ item:set_tier(ItemTier.find("voidUncommon"))
 object:set_sprite(sprite_effect)
 object:set_depth(-10)
 
+local CO_PURPLE = Color.from_rgb(87, 36, 94)
+local CO_PINK = Color.from_rgb(233, 40, 72)
+local CO_OFFWHITE = Color.from_rgb(225, 214, 242)
+
 particleShrimp:set_shape(7)
 particleShrimp:set_life(10, 10)
 particleShrimp:set_speed(0, 0, 0, 0)
 particleShrimp:set_size(0.1, 0.1, 0, 0)
-particleShrimp:set_color3(Color.from_rgb(233, 40, 72),Color.from_rgb(87, 36, 94) , Color.from_rgb(87, 36, 94))
+particleShrimp:set_color3(CO_PINK, CO_PURPLE, CO_PURPLE)
 particleShrimp:set_alpha3(1, 1, 0)
 particleShrimp:set_blend(0)
 
@@ -36,25 +40,25 @@ particleCircle:set_life(15, 20)
 particleCircle:set_speed(0, 0, 0, 0)
 particleCircle:set_scale(2,2)
 particleCircle:set_size(0.05, 0.05, 0.03, 0)
-particleCircle:set_color3(Color.from_rgb(87, 36, 94), Color.WHITE, Color.from_rgb(87, 36, 94))
+particleCircle:set_color3(CO_PINK, CO_OFFWHITE, CO_PURPLE)
 particleCircle:set_alpha3(1, 1, 1)
 particleCircle:set_blend(0)
 
 particleCircle2:set_shape(1) -- disk
 particleCircle2:set_life(10, 10)
 particleCircle2:set_speed(0, 0, 0, 0)
-particleCircle2:set_scale(1, 1)
+particleCircle2:set_scale(0.5, 0.5)
 particleCircle2:set_size(0.5, 0.5, 0, 0)
-particleCircle2:set_color1(Color.from_rgb(225, 214, 242))
+particleCircle2:set_color1(CO_OFFWHITE)
 particleCircle2:set_alpha3(1, 1, 0)
 particleCircle2:set_blend(0)
 
 particleLine:set_shape(1) -- line
 particleLine:set_life(10, 10)
 particleLine:set_speed(0, 0, 0, 0)
-particleLine:set_scale(1, 0.1)
+particleLine:set_scale(0.8, 0.08)
 particleLine:set_size(0, 0, 0.15, 0)
-particleLine:set_color2(Color.from_rgb(233, 40, 72), Color.from_rgb(54, 28, 92) )
+particleLine:set_color2(CO_PINK, Color.from_rgb(54, 28, 92) )
 particleLine:set_alpha3(1, 1, 1)
 particleLine:set_blend(0)
 
@@ -140,13 +144,16 @@ Callback.add(object.on_step, function(inst)
     if dist < 10 then
         if Instance.exists(inst_data.target) then
             inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false)
-            particleCircle2:create(inst.x, inst.y, 1)
-            particleCircle:create(inst.x, inst.y, 1)
+            
             local orientation = math.random() * 360
             particleLine:set_orientation(orientation, orientation, 0, 0, 0)
             particleLine:create(inst.x, inst.y, 1)
             particleLine:set_orientation(orientation+ 90, orientation+90, 0, 0, 0)
             particleLine:create(inst.x, inst.y, 1)
+            
+            particleCircle2:create(inst.x, inst.y, 1)
+            particleCircle:create(inst.x, inst.y, 1)
+            
         end
         inst:destroy()
         return

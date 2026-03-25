@@ -54,9 +54,6 @@
 
 
 ## Tasks
-- pluripotent Larva animation
-- plasma shrimp smoother trail and on hit effect
 - add all the sounds in
 - mod icon art
-- 3 tiered cradles with seperate itemTiers and lootPools
 - math/memory optimisations
