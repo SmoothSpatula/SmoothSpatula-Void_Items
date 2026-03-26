@@ -35,8 +35,8 @@ Initialize.add_hotloadable(function()
 
     -- Require all files in content folders
     local folders = {
-        "items",
         "buffs",
+        "items",
         "objects",
     }
     for _, folder in ipairs(folders) do

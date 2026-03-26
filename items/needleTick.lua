@@ -35,7 +35,7 @@ end)
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
     if count <= 0 then return end
-    if math.random(0, 10) > count then return end
+    if math.random(0, 10) > count + 10 then return end
     
     if target:buff_count(buff) > 0 then 
         target:buff_apply(buff, gm.get_buff_time(target.value, buff.value), 1)
@@ -47,8 +47,6 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
         inst_data.collapse_count = 1
         inst_data.attacker = attacker
     end
-    -- print(target:buff_count(buff))
-    -- print(gm.get_buff_time(target.value, buff.value))
 
     -- play animation and sound wooo
 end)
