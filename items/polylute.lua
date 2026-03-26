@@ -9,8 +9,6 @@ local sprite = Sprite.new("item/polylute", "~/assets/sprites/items/polylute.png"
 local sprite_effect = Sprite.new("effect/polyluteLightning", "~/assets/sprites/effects/tempEffect2.png",15, 32, 32)
 local sprite_effect = Sprite.new("effect/polyluteOrb", "~/assets/sprites/effects/PolyluteOrb.png",1, 8, 8)
 
--- https://bdragon1727.itch.io
-
 -- ===== Properties =====
 
 item:set_sprite(sprite)
@@ -86,9 +84,9 @@ end
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
-    if count <= 0 or math.random(1, 100) > 1000 then return end
+    if count <= 0 or math.random(1, 100) < 25 then return end
 
-    local actual_nb = math.min(count*3, 30) -- cap it or it lags quite a bit and looks worse
+    local actual_nb = math.min(count*3, 15) -- cap it or it will get too busy imo
     local inst = Instance.create(target.x, target.y, object)
     local inst_data = Instance.get_data(inst)
     inst_data.surface = -1
@@ -117,23 +115,18 @@ end)
 
 Callback.add(object.on_step, function(inst)
     local inst_data = Instance.get_data(inst)
-
     inst_data.duration = inst_data.duration - 1
-
     if inst_data.duration < 0 then
         if Util.bool(gm.surface_exists(inst_data.surface)) then
             gm.surface_free(inst_data.surface)
         end
-        -- do the damage at the end location of the arcs
-        for i=0, inst_data.count-1 do
-            local pts = inst_data.all_pts[(i%(#inst_data.all_pts))+1]
-            local attack = inst_data.parent:fire_direct(inst_data.target, 0.6, 0, 
-                pts[#pts].x + inst_data.target.x, pts[#pts].y + inst_data.target.y, 
-                gm.constants.sSparks1, false)
-
-            --print(attack.attack_info)
+        -- do the damage at the end location of the arcs (actually it doesnt I can't do that here)
+        print(inst_data.count-1)
+        for i=0, 3 do
+            local attack = inst_data.parent:fire_direct(inst_data.target, 0.6 * inst_data.count, 0, 
+                inst_data.target.x, inst_data.target.y, gm.constants.sSparks1, false)
+            attack.attack_info.climb = i * 10
         end
-
         inst:destroy()
     end
 
@@ -201,12 +194,9 @@ Callback.add(object.ON_DRAW, function(inst)
                 end
             end
         end
-    
         gm.surface_reset_target()
     end
     gm.draw_set_alpha(1)
-    -- change the x and y scale depending on the sprite size of the target
-
     gm.draw_surface_ext(inst_data.surface, 
         inst_data.target.x - size_x, 
         inst_data.target.y - size_y, 
