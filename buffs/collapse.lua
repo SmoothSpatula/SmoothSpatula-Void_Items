@@ -41,7 +41,6 @@ Callback.add(buff.on_remove, function(actor)
     inst_data.attacker:fire_direct(actor, damage, 0, actor.x, actor.y, gm.constants.sSparks1, false)
     local size = math.sqrt(gm.sprite_get_width(actor.sprite_index) *  gm.sprite_get_height(actor.sprite_index)) / 500
 
-
     -- small circle
     particleSmall:set_color1(COL_COLLAPSE_RED)
     particleSmall:set_size(size - 0.05, size - 0.05, 0.12 *  size, 0)
@@ -49,7 +48,6 @@ Callback.add(buff.on_remove, function(actor)
     particleSmall:set_size(size + 0.05, size + 0.05, 0.12 *  size, 0)
     particleSmall:create(actor.x, actor.y, 1)
 
-    
     particleSmall:set_color1(Color.BLACK)
     particleSmall:set_size(size, size, 0.1 * size, 0)
     particleSmall:create(actor.x, actor.y, 1)
@@ -62,11 +60,7 @@ Callback.add(buff.on_remove, function(actor)
     particleBig:set_size(size*2 + 0.05, size*2 + 0.05, 0.18 *  size, 0)
     particleBig:create(actor.x, actor.y, 1)
 
-    
     particleBig:set_color1(Color.BLACK)
     particleBig:set_size(size*2, size*2, 0.15 * size, 0)
     particleBig:create(actor.x, actor.y, 1)
-
-
-
 end)

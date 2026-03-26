@@ -6,9 +6,6 @@ local item = Item.new("needleTick")
 -- ===== Assets =====
 
 local sprite = Sprite.new("item/needleTick", "~/assets/sprites/items/needleTick.png", 1, 16, 16)
---local sprite_effect = Sprite.new("effect/polyluteLightning", "~/assets/sprites/effects/tempEffect2.png",15, 32, 32)
-
--- https://bdragon1727.itch.io
 
 -- ===== Properties =====
 
@@ -17,9 +14,6 @@ item:set_tier(ItemTier.find("voidCommon"))
 
 buff = Buff.find("collapseDebuff")
 buff_time = 180
-
--- object:set_sprite(sprite_effect)
--- object:set_depth(10)
 
 -- ===== Callbacks =====
 
@@ -47,8 +41,6 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
         inst_data.collapse_count = 1
         inst_data.attacker = attacker
     end
-
-    -- play animation and sound wooo
 end)
 
 -- ===== Additional =====
