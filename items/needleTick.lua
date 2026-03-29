@@ -17,15 +17,6 @@ buff_time = 180
 
 -- ===== Callbacks =====
 
-RecalculateStats.add(function(actor, api)
-    -- Check buff count
-    local stack = actor:item_count(item)
-    if stack <= 0 then return end
-
-    -- Add stats
-    api.maxshield_add_from_maxhp(0.1)
-end)
-
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
     if count <= 0 then return end
