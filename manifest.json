@@ -1,11 +1,11 @@
 ﻿{
 	"name": "Void_Items",
 	"version_number": "0.1.0",
-	"website_url": "https://github.com/Klehrik/RoRR-Lost_in_Orbit",
-	"description": "Content expansion mod adding new items.",
+	"website_url": "https://github.com/SmoothSpatula/SmoothSpatula-Void_Items",
+	"description": "Port of several items from Survivors of the Void.",
 	"dependencies": [
-		"ReturnOfModding-ReturnOfModding-1.1.16",
-		"ReturnsAPI-ReturnsAPI-0.1.47",
+		"ReturnOfModding-ReturnOfModding-1.1.19",
+		"ReturnsAPI-ReturnsAPI-0.1.54",
 		"LuaENVY-ENVY-1.2.0"
 	]
 }

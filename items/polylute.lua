@@ -121,7 +121,7 @@ Callback.add(object.on_step, function(inst)
             gm.surface_free(inst_data.surface)
         end
         -- do the damage at the end location of the arcs (actually it doesnt I can't do that here)
-        print(inst_data.count-1)
+        -- print(inst_data.count-1)
         for i=0, 3 do
             local attack = inst_data.parent:fire_direct(inst_data.target, 0.6 * inst_data.count, 0, 
                 inst_data.target.x, inst_data.target.y, gm.constants.sSparks1, false)

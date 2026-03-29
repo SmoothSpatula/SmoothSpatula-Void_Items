@@ -1,5 +1,6 @@
-Content mod that adds Void items from RoR2, made for the RoRR mod jam.
-Made in collaboration with Klehrik.
+Content mod that adds Void items from RoR2, made for the RoRR mod jam.  
+Made in collaboration with Klehrik.  
+
 ---
 
 ### Installation Instructions
