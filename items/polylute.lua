@@ -9,6 +9,8 @@ local sprite = Sprite.new("item/polylute", "~/assets/sprites/items/polylute.png"
 local sprite_effect = Sprite.new("effect/polyluteLightning", "~/assets/sprites/effects/tempEffect2.png",15, 32, 32)
 local sprite_effect = Sprite.new("effect/polyluteOrb", "~/assets/sprites/effects/PolyluteOrb.png",1, 8, 8)
 
+local sound = Sound.new("item/polylute", "~/assets/sounds/items/polylute.ogg")
+
 -- ===== Properties =====
 
 item:set_sprite(sprite)
@@ -123,15 +125,21 @@ Callback.add(object.on_step, function(inst)
             gm.surface_free(inst_data.surface)
         end
 
+        local tx, ty = inst_data.target.x, inst_data.target.y
+
         -- do the damage at the end location of the arcs (actually it doesnt I can't do that here)
         for i = 1, 3 do
             local attack_info = inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, 
-                inst_data.target.x, inst_data.target.y, gm.constants.sSparks1, false).attack_info
+                tx, ty, gm.constants.sSparks1, false).attack_info
             attack_info:use_raw_damage()
             if Util.bool(attack_info.critical) then attack_info:set_critical(false) end
             attack_info.climb = (i - 1) * 10
             attack_info.damage_color = damage_color
         end
+
+        -- Sfx
+        sound:play_synced(tx, ty, 0.9)
+
         inst:destroy()
     end
 

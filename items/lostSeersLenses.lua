@@ -7,8 +7,9 @@ local particleSeer = Particle.new("lostSeersLensesParticle")
 -- ===== Assets =====
 
 local sprite = Sprite.new("item/lostSeersLenses", "~/assets/sprites/items/lostSeersLenses.png", 1, 16, 16)
-
 local effect_sprite = Sprite.new("item/seerEffect", "~/assets/sprites/effects/100x108frames30.png", 30, 50, 54)
+
+local sound = Sound.new("item/lostSeersLenses", "~/assets/sounds/items/lostSeersLenses.ogg")
 
 
 -- ===== Properties =====
@@ -44,10 +45,11 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
         inst_data.size_x = gm.sprite_get_width(target.sprite_index)
         inst_data.size_y = gm.sprite_get_height(target.sprite_index)
 
+        Alarm.add(1, function(target) target:kill() end, target)
 
-        Alarm.add(1, function(target) target:kill() end, target) 
+        -- Sfx
+        sound:play_synced(target.x, target.y, 0.33)
     end
-    -- play animation and sound wooo
 end)
 
 

@@ -7,6 +7,8 @@ local sprite = Sprite.new("item/voidsentFlame", "~/assets/sprites/items/voidsent
 local sprite_effect = Sprite.new("effect/voidsentFlamesef", "~/assets/sprites/effects/voidFlamesEffect1.png", 9, 32, 32)
 -- sprite effect used made by https://bdragon1727.itch.io
 
+local sound = Sound.new("item/voidsentFlame", "~/assets/sounds/items/voidsentFlame.ogg")
+
 -- ===== Properties =====
 
 item:set_sprite(sprite)
@@ -20,9 +22,11 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
     if count <= 0 or target.hp < target.maxhp then return end
     local size = 96 + 16*(count-1)
-    attacker:fire_explosion(target.x, target.y, size, size, 1.04 + 1.56*count, sprite_effect, nil, false)
+    local tx, ty = target.x, target.y
+    attacker:fire_explosion(tx, ty, size, size, 1.04 + 1.56*count, sprite_effect, nil, false)
 
-    -- play animation and sound wooo
+    -- Sfx
+    sound:play_synced(tx, ty, 0.5)
 end)
 
 -- ===== Additional =====

@@ -8,6 +8,8 @@ local item_used = Item.new("pluripotentLarvaUsed")
 local sprite = Sprite.new("item/pluripotentLarva", "~/assets/sprites/items/pluripotentLarva.png", 1, 16, 16)
 local sprite_used = Sprite.new("item/pluripotentLarvaUsed", "~/assets/sprites/items/pluripotentLarvaUsed.png", 1, 16, 16)
 
+local sound = Sound.new("item/pluripotentLarva", "~/assets/sounds/items/pluripotentLarva.ogg")
+
 -- ===== Properties =====
 
 item:set_sprite(sprite)
@@ -62,6 +64,9 @@ Hook.add_pre(gm.constants.actor_death, function(self, other, result, args)
                 false)
             end
         end
+
+        -- Sfx
+        sound:play_synced(self.x, self.y, 0.9)
                 
         return false
     end
