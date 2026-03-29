@@ -68,6 +68,8 @@ local max_turn_radius = 2.5
 local start_distance = 40 -- change this to whatever distance you want
 local base_speed = 5
 
+local damage_color = Color(0xd183d7)
+
 -- ===== Callbacks =====
 
 local function shrimp_pos_angle_speed(attacker, target) 
@@ -148,6 +150,7 @@ Callback.add(object.on_step, function(inst)
         if Instance.exists(inst_data.target) then
             local attack_info = inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false).attack_info
             attack_info:use_raw_damage()
+            attack_info.damage_color = damage_color
             if Util.bool(attack_info.critical) then attack_info:set_critical(false) end
             
             local orientation = math.random() * 360

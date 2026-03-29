@@ -3,7 +3,7 @@
 local spr_cradle = Sprite.new("voidCradle", "~/assets/sprites/objects/voidCradle.png", 10, 16, 36)
 
 local spawn_cost    = 65
-local spawn_weight  = 3
+local spawn_weight  = 10
 local spawn_rarity  = 1
 
 -- Create loot pools
