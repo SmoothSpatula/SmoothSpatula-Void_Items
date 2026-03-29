@@ -24,13 +24,17 @@ corruptions["56LeafClover"] = "benthicBloom" --freaking lua man, malformed numbe
 
 Initialize.add_hotloadable(function()    
     -- Create item tiers
-    for _, identifier in ipairs{
-        "voidCommon",
-        "voidUncommon",
-        "voidRare",
+    for _, data in ipairs{
+        {"voidCommon",   nil,                      nil},
+        {"voidUncommon", Global.pItemTierUncommon, {{0, 11}, {120, 11}, {240, 11}}},
+        {"voidRare",     Global.pItemTierRare,     {{0, 12}, {90, 12}, {180, 12}, {270, 12}}},
     } do
-        local tier = ItemTier.new(identifier)
-        tier.text_color = "p"
+        local tier = ItemTier.new(data[1])
+        tier.text_color          = "p"
+        tier.pickup_color        = Color(0xd183d7)
+        tier.pickup_color_bright = Color(0xd183d7)
+        if data[2] then tier.pickup_particle_type = data[2] end
+        if data[3] then tier:set_head_shape(data[3]) end
     end
 
     -- Require all files in content folders

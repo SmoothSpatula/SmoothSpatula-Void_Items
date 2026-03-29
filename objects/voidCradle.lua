@@ -89,10 +89,10 @@ Callback.add(obj.on_step, function(inst)
         end
         
         local pool = loot_pools[index]
-        local item, pickup = pool:roll()
+        local item = pool:roll()
 
         local pos = Vector(inst.x, inst.y - 16)
-        pickup:create(pos.x, pos.y)
+        item:create(pos.x, pos.y)
         part_fire:create(pos.x, pos.y, 6)
 
         inst:destroy()
