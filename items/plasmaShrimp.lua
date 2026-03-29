@@ -97,7 +97,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     inst_data.target = target
     inst_data.duration = 480
     inst_data.parent = attacker
-    inst_data.damage = stack * 0.4
+    inst_data.damage = hit_info.attack_info.damage * stack * 0.4
     inst_data.last_x = shrimp_x - math.cos(math.rad(shrimp_angle)) * 20 
     inst_data.last_y = shrimp_y + math.sin(math.rad(shrimp_angle)) * 20 
     inst_data.max_turn_radius = max_turn_radius
@@ -146,7 +146,8 @@ Callback.add(object.on_step, function(inst)
 
     if dist < 10 then
         if Instance.exists(inst_data.target) then
-            inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false)
+            local attack_info = inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false).attack_info
+            attack_info:use_raw_damage()
             
             local orientation = math.random() * 360
             particleLine:set_orientation(orientation, orientation, 0, 0, 0)
