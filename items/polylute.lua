@@ -84,7 +84,7 @@ end
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
-    if count <= 0 or math.random(1, 100) < 25 then return end
+    if count <= 0 or math.random(1, 100) <= 25 then return end
 
     local actual_nb = math.min(count*3, 15) -- cap it or it will get too busy imo
     local inst = Instance.create(target.x, target.y, object)

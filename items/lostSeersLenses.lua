@@ -36,7 +36,7 @@ particleSeer:set_blend(0)
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     if attacker:item_count(item) <= 0 or gm.object_get_parent(target.object_index) == gm.constants.pBoss then return end
     
-    if math.random(0, 200) < attacker:item_count(item) then
+    if math.random(1, 200) <= attacker:item_count(item) then
         local inst = Instance.create(target.x, target.y, object)
         local inst_data = Instance.get_data(inst)
         inst_data.surface = -1

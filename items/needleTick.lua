@@ -29,7 +29,7 @@ end)
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
     if count <= 0 then return end
-    if math.random(0, 10) > count + 10 then return end
+    if math.random(1, 10) > count then return end
     
     if target:buff_count(buff) > 0 then 
         target:buff_apply(buff, gm.get_buff_time(target.value, buff.value), 1)
