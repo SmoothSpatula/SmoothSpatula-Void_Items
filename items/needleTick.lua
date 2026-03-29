@@ -5,7 +5,7 @@ local item = Item.new("needletick")
 
 -- ===== Assets =====
 
-local sprite = Sprite.new("item/needletick", "~/assets/sprites/items/needletick.png", 1, 16, 16)
+local sprite = Sprite.new("item/needletick", "~/assets/sprites/items/needletick.png", 1, 16, 18)
 
 -- ===== Properties =====
 
