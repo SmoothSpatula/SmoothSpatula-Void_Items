@@ -15,7 +15,7 @@ corruptions = {
     diosFriend = "pluripotentLarva",
     bustlingFungus = "weepingFungus",
     energyCell = "lysateCell",
-    rustyKnife = "needleTick",
+    rustyKnife = "needletick",
     lensMakersGlasses = "lostSeersLenses"
 }
 corruptions["56LeafClover"] = "benthicBloom" --freaking lua man, malformed number near '56L'

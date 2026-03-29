@@ -6,7 +6,7 @@ local buff = Buff.new("saferSpaces")
 -- ===== Assets =====
 
 local sprite_ring = Sprite.new("buff/saferSpacesRing", "~/assets/sprites/effects/saferSpacesRing.png", 1, 128, 128)
-local sound       =  Sound.new("buff/saferSpacesProc", "~/assets/sounds/buffs/saferSpacesProc.ogg")
+local sound       =  Sound.new("buff/saferSpaces", "~/assets/sounds/buffs/saferSpaces.ogg")
 
 
 -- ===== Properties =====

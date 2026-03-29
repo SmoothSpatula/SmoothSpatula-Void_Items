@@ -1,11 +1,11 @@
 -- Rusty Knife -> NeedleTick -> 10% (+10% per stack) chance to collapse an enemy for 400% base damage. 
 -- Needletick allows you to apply a stack of Collapse to foes, which detonates after a few seconds for a large amount of damage per stack of Collapse.
 
-local item = Item.new("needleTick")
+local item = Item.new("needletick")
 
 -- ===== Assets =====
 
-local sprite = Sprite.new("item/needleTick", "~/assets/sprites/items/needleTick.png", 1, 16, 16)
+local sprite = Sprite.new("item/needletick", "~/assets/sprites/items/needletick.png", 1, 16, 16)
 
 -- ===== Properties =====
 

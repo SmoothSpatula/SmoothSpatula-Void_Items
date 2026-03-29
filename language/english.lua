@@ -12,7 +12,7 @@ return {
             description = "<g>Heals</c> for <g>2%</c> <c_stack>(+2% per stack)</c> of your health every second <b>while sprinting</c>. <p>Corrupts all Bustling Fungi</c>.",
         },
 
-        needleTick = {
+        needletick = {
             name        = "Needletick",
             pickup      = "Chance to collapse enemies on hit. <p>Corrupts all Tri-Tip Daggers.</c>",
             description = "<y>10%</c> <c_stack>(+10% per stack)</c> chance to <y>collapse</c> an enemy for <y>400%</c> base damage. <p>Corrupts all Tri-Tip Daggers.</c>",

@@ -15,6 +15,8 @@ local sprite = Sprite.new("item/plasmaShrimp", "~/assets/sprites/items/plasmaShr
 local sprite_effect = Sprite.new("effect/shrimpEf", "~/assets/sprites/effects/shrimpEffect.png", 1, 4, 4)
 local sprite_explosion_effect = Sprite.new("effect/shrimpExplosionEf", "~/assets/sprites/effects/Symmetrical_impact_003.png", 7, 48, 48)
 
+local sound = Sound.new("item/plasmaShrimp", "~/assets/sounds/items/plasmaShrimp.ogg")
+
 -- ===== Properties =====
 
 item:set_sprite(sprite)
@@ -101,6 +103,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     inst_data.max_turn_radius = max_turn_radius
 
     -- play animation and sound wooo
+    sound:play_synced(shrimp_x, shrimp_y, 0.6)
 end)
 
 RecalculateStats.add(function(actor, api)
