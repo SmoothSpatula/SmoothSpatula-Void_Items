@@ -34,7 +34,7 @@ particleSeer:set_blend(0)
 -- ===== Callbacks =====
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
-    if attacker:item_count(item) <= 0 or gm.object_get_parent(target.object_index) == gm.constants.pBoss then return end
+    if attacker:item_count(item) <= 0 or Util.bool(GM.actor_is_boss(target)) then return end
     
     if math.random(1, 200) <= attacker:item_count(item) then
         local inst = Instance.create(target.x, target.y, object)

@@ -103,7 +103,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     inst_data.max_turn_radius = max_turn_radius
 
     -- play animation and sound wooo
-    sound:play_synced(shrimp_x, shrimp_y, 0.6)
+    sound:play_synced(shrimp_x, shrimp_y, 0.5)
 end)
 
 RecalculateStats.add(function(actor, api)
@@ -148,6 +148,7 @@ Callback.add(object.on_step, function(inst)
         if Instance.exists(inst_data.target) then
             local attack_info = inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false).attack_info
             attack_info:use_raw_damage()
+            if Util.bool(attack_info.critical) then attack_info:set_critical(false) end
             
             local orientation = math.random() * 360
             particleLine:set_orientation(orientation, orientation, 0, 0, 0)

@@ -22,6 +22,8 @@ local max_turn_radius_low = 1.1
 local max_turn_radius_add = 0.5
 local distance_from_target = 20
 
+local damage_color = Color(0xd183d7)
+
 -- ===== Callbacks =====
 
 function generate_curve_points(radius, curvature, steps, size_x, size_y)
@@ -84,7 +86,7 @@ end
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
-    if count <= 0 or math.random(1, 100) <= 25 then return end
+    if count <= 0 or math.random(1, 100) > 25 then return end
 
     local actual_nb = math.min(count*3, 15) -- cap it or it will get too busy imo
     local inst = Instance.create(target.x, target.y, object)
@@ -101,7 +103,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     for i=1, actual_nb do
         all_pts[i] = generate_curve_points(15,2,12, size_x, size_y)
     end
-    inst_data.count = count
+    inst_data.damage = hit_info.attack_info.damage * 0.6 * count
     inst_data.all_pts = all_pts
     inst_data.target = target
     inst_data.parent = attacker
@@ -120,12 +122,15 @@ Callback.add(object.on_step, function(inst)
         if Util.bool(gm.surface_exists(inst_data.surface)) then
             gm.surface_free(inst_data.surface)
         end
+
         -- do the damage at the end location of the arcs (actually it doesnt I can't do that here)
-        -- print(inst_data.count-1)
-        for i=0, 3 do
-            local attack = inst_data.parent:fire_direct(inst_data.target, 0.6 * inst_data.count, 0, 
-                inst_data.target.x, inst_data.target.y, gm.constants.sSparks1, false)
-            attack.attack_info.climb = i * 10
+        for i = 1, 3 do
+            local attack_info = inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, 
+                inst_data.target.x, inst_data.target.y, gm.constants.sSparks1, false).attack_info
+            attack_info:use_raw_damage()
+            if Util.bool(attack_info.critical) then attack_info:set_critical(false) end
+            attack_info.climb = (i - 1) * 10
+            attack_info.damage_color = damage_color
         end
         inst:destroy()
     end

@@ -3,7 +3,7 @@ return {
         voidsentFlame = {
             name        = "Voidsent Flame",
             pickup      = "Full health enemies also detonate on hit. <p>Corrupts all Will-o'-the-wisps.</c>",
-            description = "Upon hitting an enemy at <y>full health</c>, spawn a <y>lava pillar</c> in a <y>12m</c> <c_stack>(+2.4m per stack)</c> radius for <y>260%</c> <g>(+156% per stack) <y>damage</c>. <p>Corrupts all Will-o'-the-wisps.</c>",
+            description = "Upon hitting an enemy at <y>full health</c>, spawn a <y>lava pillar</c> in a <y>12m</c> <c_stack>(+2.4m per stack)</c> radius for <y>260%</c> <c_stack>(+156% per stack) <y>damage</c>. <p>Corrupts all Will-o'-the-wisps.</c>",
             destination = "",
             date        = "",
             story       = "",
@@ -75,7 +75,7 @@ return {
         lostSeersLenses = {
             name        = "Lost Seer's Lenses",
             pickup      = "Gain a 0.5% chance to instantly kill a non-boss enemy. <p>Corrupts all Lens-Maker's Glasses.</c>",
-            description = "Your attacks have a <y>0.5%</c> <c_stack>(+0.5% per stack)</c> chance to <y>instantly kill</c> a <y>non-Boss enemy</c>. <p>Corrupts all Lens-Maker's Glasses.</c>",
+            description = "Your attacks have a <y>0.5% <c_stack>(+0.5% per stack) <y>chance</c> to <y>instantly kill</c> a <y>non-Boss enemy</c>. <p>Corrupts all Lens-Maker's Glasses.</c>",
             destination = "",
             date        = "",
             story       = "",
