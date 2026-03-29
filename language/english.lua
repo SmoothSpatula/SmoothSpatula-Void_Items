@@ -30,7 +30,7 @@ return {
         polylute = {
             name        = "Polylute",
             pickup      = "Chance to repeatedly strike a single enemy with lightning. <p>Corrupts all Ukuleles.</c>",
-            description = "<y>25%</c> chance to fire <y>lightning</c> for <y>3x60% <c_stack>(+60% per stack)</c> TOTAL damage</c>. <p>Corrupts all Ukuleles.</c>",
+            description = "<y>25%</c> chance to fire <y>lightning</c> for <y>3x60% <c_stack>(+60% per stack) <y>TOTAL damage</c>. <p>Corrupts all Ukuleles.</c>",
             destination = "",
             date        = "",
             story       = "",
@@ -48,7 +48,7 @@ return {
         plasmaShrimp = {
             name        = "Plasma Shrimp",
             pickup      = "While you have shield, fire missiles on every hit. <p>Corrupts all AtG Missile Mk. 1s.</c>",
-            description = "Gain a <b>10% health shield</c>. While you have shield, hitting an enemy fires a missile that deals <y>40% <c_stack>(+40% per stack) TOTAL damage</c>. <p>Corrupts all AtG Missile Mk. 1s.</c>",
+            description = "Gain a <b>10% health shield</c>. While you have shield, hitting an enemy <y>fires a missile</c> that deals <y>40% <c_stack>(+40% per stack) <y>TOTAL damage</c>. <p>Corrupts all AtG Missile Mk. 1s.</c>",
             destination = "",
             date        = "",
             story       = "",
