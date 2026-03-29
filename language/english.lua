@@ -12,7 +12,7 @@ return {
         weepingFungus = {
             name        = "Weeping Fungus",
             pickup      = "Heal while moving at full speed. <p>Corrupts all Bustling Fungi.</c>",
-            description = "<g>Heal</c> for <g>2%</c> <c_stack>(+1% per stack) health</c> every second <b>while moving at full speed</c>. <p>Corrupts all Bustling Fungi</c>.",
+            description = "<g>Heal</c> for <g>2% <c_stack>(+1% per stack) <g>health</c> every second <b>while moving at full speed</c>. <p>Corrupts all Bustling Fungi</c>.",
             destination = "",
             date        = "",
             story       = "<c_stack>//--AUTO-TRANSCRIPTION FROM UES [Redacted] --//</c> \n\n\"This sucks.\" \n\n\"You know, you could have something to eat if you just said the magic word...\" \n\n\"No! I'm not having one of those $#@!ing mushrooms!\" \n\n\"C'mon, they're harmless. In fact, better than harmless, they're--\" \n\n\"Don't even start. And we don't even know that, remember how you got an infection after you first tried them!?\" \n\n\"Common head cold.\" \n\n\"Whatever. My point being, those things probably changed your digestive tract so you could eat them, or some weird $#!& like that. I'm not stooping to your level!\" \n\n\"Well, you're more than welcome to ride your high road with THEM, Mr. Picky Eater. Or, you could stay in the safety of this little cave, and share a snack with me.\" \n\n\"I... I'd rather--\" \n\nROAAAAAAAAAAAAAR!! \n\n\"...Oh my god, fine. Hand it over.\"",
