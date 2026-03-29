@@ -19,8 +19,8 @@ RecalculateStats.add(function(actor, api)
     if stack <= 0 then return end
 
     -- Add stats
-    api.skill_special.cooldown_mult(0.67)
     api.skill_special.max_stock_add(stack)
+    -- api.skill_special.cooldown_mult(0.67)
 end)
 
 -- ===== Additional =====

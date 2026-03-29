@@ -36,7 +36,7 @@ Callback.add(Callback.ON_STAGE_START, function()
         local uncommon_nb = 0
 
         --change 3 to 3x stack size
-        while common_nb+uncommon_nb < 3* stack_size and pool_list:size() > 0 do
+        while common_nb+uncommon_nb < 1 * stack_size and pool_list:size() > 0 do
             --random item id from pool
             local obj_id = pool_list:get(math.random(pool_list:size())-1)
             local item_del = Item.wrap(gm.object_to_item(obj_id))

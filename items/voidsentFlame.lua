@@ -23,7 +23,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     if count <= 0 or target.hp < target.maxhp then return end
     local size = 96 + 16*(count-1)
     local tx, ty = target.x, target.y
-    attacker:fire_explosion(tx, ty, size, size, 1.04 + 1.56*count, sprite_effect, nil, false)
+    attacker:fire_explosion(tx, ty, size, size, 0.7 + 0.8*count, sprite_effect, nil, false)
 
     -- Sfx
     sound:play_synced(tx, ty, 0.5)

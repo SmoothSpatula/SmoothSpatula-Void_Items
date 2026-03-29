@@ -59,7 +59,7 @@ Callback.add(Callback.ON_SECOND, function()
     local actors = item:get_holding_actors()
     for _, actor in ipairs(actors) do
         if math.abs(actor.pHspeed) >= actor.pHmax - 0.2 then
-            actor:heal(actor.maxhp * 0.02 * actor:item_count(item))
+            actor:heal(actor.maxhp * (0.01 + 0.01 * actor:item_count(item)))
 
             -- effect 1
             spawn_fungus_particle(actor)

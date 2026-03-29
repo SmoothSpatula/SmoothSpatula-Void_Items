@@ -88,7 +88,7 @@ end
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
-    if count <= 0 or math.random(1, 100) > 25 then return end
+    if count <= 0 or math.random(1, 100) > 20 then return end
 
     local actual_nb = math.min(count*3, 15) -- cap it or it will get too busy imo
     local inst = Instance.create(target.x, target.y, object)
@@ -105,7 +105,7 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     for i=1, actual_nb do
         all_pts[i] = generate_curve_points(15,2,12, size_x, size_y)
     end
-    inst_data.damage = hit_info.attack_info.damage * 0.6 * count
+    inst_data.damage = hit_info.attack_info.damage * 0.5 * count
     inst_data.all_pts = all_pts
     inst_data.target = target
     inst_data.parent = attacker

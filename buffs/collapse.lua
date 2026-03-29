@@ -40,7 +40,7 @@ Callback.add(buff.on_remove, function(actor)
     local actor_x, actor_y = actor.x, actor.y
 
     local inst_data = Instance.get_data(actor)
-    local damage = inst_data.collapse_count * 4
+    local damage = inst_data.collapse_count * 2.5
     inst_data.attacker:fire_direct(actor, damage, 0, actor_x, actor_y, gm.constants.sSparks1, false)
     local size = math.sqrt(gm.sprite_get_width(actor.sprite_index) *  gm.sprite_get_height(actor.sprite_index)) / 500
 
