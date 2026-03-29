@@ -20,8 +20,8 @@ return {
 
         needletick = {
             name        = "Needletick",
-            pickup      = "Chance to collapse enemies on hit. <p>Corrupts all Tri-Tip Daggers.</c>",
-            description = "<y>10%</c> <c_stack>(+10% per stack)</c> chance to <y>collapse</c> an enemy for <y>250% damage</c>. <p>Corrupts all Tri-Tip Daggers.</c>",
+            pickup      = "Chance to collapse enemies on hit. <p>Corrupts all Rusty Knives.</c>",
+            description = "<y>10%</c> <c_stack>(+10% per stack)</c> chance to <y>collapse</c> an enemy for <y>250% damage</c>. <p>Corrupts all Rusty Knives.</c>",
             destination = "",
             date        = "",
             story       = "<c_stack>Welcome to DataScraper (v3.1.53 - beta branch) \n$ Scraping memory... done. \n$ Resolving... done. \n$ Combing for relevant data... done. \nComplete</c> \n\nThe following has been flagged as evidence for use in the trial of Titan v. Cooper, to be presided over by the Supreme Court of Titan. Some details may be expunged for the safety and confidentiality of included persons. \n\n--- \n\n\"Ah... |||||, my dear, do you watch any cartoons?\" \n\n\"P-Please... I w-w-want to go h-h-home...\" \n\n\"You see, there's this little trick they do that I've been meaning to try. You'll help me, won't you...?\" \n\n\"Oh, ||||||||... help me...\" \n\n\"Wonderful. Now stay nice and still for me. Let's see if this works...\" \n\n\"W-What are you... Uh...\" \n\n\"Give it a moment, |||||, my dear. Let me just put this darling toy back in its scabbard.\" \n\n\"W-What are you-- OH GOD!!! HELP ME!!! PLEASE STOP, MY ORGANS--\" \n\n\"Hey, no more tears. I just did something very cool. Let's see if I can do it with our favorite knife, hm?\" \n\n\"PLEASE, NO, PLEASE PLEASE PLEASE\" \n\nThe remainder of this transcript has been sealed. \nReason: vomit in buckets",
@@ -38,8 +38,8 @@ return {
 
         saferSpaces = {
             name        = "Safer Spaces",
-            pickup      = "Block the next source of damage. <p>Corrupts all Tougher Times.</c>",
-            description = "<g>Blocks</c> incoming damage once. Recharges after <b>15 seconds</c> <c_stack>(-10% per stack)</c>. <p>Corrupts all Tougher Times.</c>",
+            pickup      = "Block the next source of damage. <p>Corrupts all Tough Times.</c>",
+            description = "<g>Blocks</c> incoming damage once. Recharges after <b>15 seconds</c> <c_stack>(-10% per stack)</c>. <p>Corrupts all Tough Times.</c>",
             destination = "",
             date        = "",
             story       = "\"You can't shoot me.\n\nYou can't taze me.\n\nYou can't gas me.\n\nYou can't even knock me down.\n\nNot without something very precious going squish.\"",
@@ -56,8 +56,8 @@ return {
 
         lysateCell = {
             name        = "Lysate Cell",
-            pickup      = "Add an extra charge of your Special skill. <p>Corrupts all Fuel Cells.</c>",
-            description = "Add <b>+1 <c_stack>(+1 per stack)</c> charge of your <b>Special skill</c>. <p>Corrupts all Fuel Cells.</c>",
+            pickup      = "Add an extra charge of your Special skill. <p>Corrupts all Energy Cells.</c>",
+            description = "Add <b>+1 <c_stack>(+1 per stack)</c> charge of your <b>Special skill</c>. <p>Corrupts all Energy Cells.</c>",
             destination = "",
             date        = "",
             story       = "\"Recycling is an important thing. And I don't mean recycling a glass bottle to help the environment - though that's important too! No, by 'recycling,' I mean taking one thing, and using it for another. For example, my Ukelele. I love this thing. It has electric properties, and passes them on to my attacks - free chain lightning! But what if I were to 'recycle' it? I think the Uke would make a pretty good melee weapon. Imagine, bludgeoning a Lemurian and pumping it full of volts, in one easy step. \n\nDo you get what I'm saying? There's opportunities for recycling all over the place. You just need to open your mind to the possibilities, and see... And do a little recycling. It's good for the environment.\" \n\n- Lost Journal, recovered from Petrichor V",
@@ -74,8 +74,8 @@ return {
 
         lostSeersLenses = {
             name        = "Lost Seer's Lenses",
-            pickup      = "Gain a 0.5% chance to instantly kill a non-boss enemy. <p>Corrupts all Lens-Maker's Glasses.</c>",
-            description = "Your attacks have a <y>0.5% <c_stack>(+0.5% per stack) <y>chance</c> to <y>instantly kill</c> a <y>non-Boss enemy</c>. <p>Corrupts all Lens-Maker's Glasses.</c>",
+            pickup      = "Gain a 0.5% chance to instantly kill a non-boss enemy. <p>Corrupts all Lens Maker's Glasses.</c>",
+            description = "Your attacks have a <y>0.5% <c_stack>(+0.5% per stack) <y>chance</c> to <y>instantly kill</c> a <y>non-Boss enemy</c>. <p>Corrupts all Lens Maker's Glasses.</c>",
             destination = "",
             date        = "",
             story       = "\"What does it mean to see? \n\nTo a beast, it means to identify potential food and mates. To propagate, to survive. Sight is nothing more than a means to an end, is it not? \n\nTo someone like me... To those who know true purpose... To see is to LIVE. To see is to spot that one little crack in the enemy's armor, to spot that smallest moment of hesitation when they rear back to strike. \n\nTo see the way flesh folds once the skull gives in to your weapon. \n\nYes, it's the little things, but seeing those things... REALLY seeing them. Ah, it fulfills you. I do hope you understand... And if not, you will eventually, if you've read this note.\" \n\n- Lost Journal, recovered from Petrichor V",
@@ -83,8 +83,8 @@ return {
 
         benthicBloom = {
             name        = "Benthic Bloom",
-            pickup      = "Upgrades your items at the start of each stage. <p>Corrupts all 57 Leaf Clovers.</c>",
-            description = "<b>Upgrade 1</c> <c_stack>(+1 per stack)</c> random item to an item of the next <b>higher rarity</c> at the <b>start of each stage</c>. <p>Corrupts all 57 Leaf Clovers.</c>",
+            pickup      = "Upgrades your items at the start of each stage. <p>Corrupts all 56 Leaf Clovers.</c>",
+            description = "<b>Upgrade 1</c> <c_stack>(+1 per stack)</c> random item to an item of the next <b>higher rarity</c> at the <b>start of each stage</c>. <p>Corrupts all 56 Leaf Clovers.</c>",
             destination = "",
             date        = "",
             story       = "\"Luck? Who needs luck, in a place like this. \n\nTo survive here, you'd need more than just luck. You need intuition. Instinct. The right tools. Power. \n\nI know you're scared. And I am too. But if there's anything this hell hole has taught me... \n\nWe make our own luck.\" \n\n- Signal Echoes, UES Contact Light",
