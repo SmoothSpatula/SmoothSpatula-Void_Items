@@ -33,7 +33,7 @@ end)
 DamageDodge.add(function(api, current_dodge)
     if current_dodge ~= DamageDodge.NONE then return end
 
-    local actor = api.hit
+    local actor = Instance.wrap(api.hit)
     local stack = actor:buff_count(buff)
     if stack <= 0 then return end
 
