@@ -19,8 +19,30 @@ item_used:set_sprite(sprite_used)
 local reviving_count = 0
 local revivingUVs = {}
 
--- ===== Callbacks =====
+-- ===== Network ===== --
 
+local packetPluriDeath = Packet.new("packetPluriDeath")
+
+local function add_to_uvs(actor)
+    revivingUVs[actor.id] = {actor, 60, 1} -- time and scale
+    reviving_count = reviving_count + 1
+    if Net.online and Net.host then
+		packetPluriDeath:send_to_all(actor)
+	end
+end
+
+local pluriDeath_serializer = function(buffer, actor)
+	buffer:write_instance(actor)
+end
+local pluriDeath_deserializer = function(buffer)
+	local actor = buffer:read_instance()
+	if not Instance.exists(actor) then return end
+	add_to_uvs(actor)
+end
+
+packetPluriDeath:set_serializers(pluriDeath_serializer, pluriDeath_deserializer)
+
+-- ===== Callbacks =====
 
 function get_pixel_position(inst)
     local cam = Global.view_camera
@@ -41,8 +63,7 @@ Hook.add_pre(gm.constants.actor_death, function(self, other, result, args)
         self:item_take(item)
         self:item_give(item_used)
         
-        revivingUVs[self.id] = {self, 60, 1} -- time and scale
-        reviving_count = reviving_count + 1
+        add_to_uvs(self) -- networked
 
         for og, crpt in pairs(corruptions) do
             local original = Item.find(og)
