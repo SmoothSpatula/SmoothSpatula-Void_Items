@@ -4,4 +4,16 @@
 - make items spawned from cradle not pickupable until pressing a key
 - add cradle display cost
 - plasma shrimp recolor shield ui
-- net implementation
+
+
+### net implementation status
+- voidsentFlame
+- polylute
+- saferSpaces -> works, but alarm is bugged
+- plasmaShrimp
+- pluripotentLarva -> implemented
+- weepingFungus -> good
+- lysateCell
+- needletick
+- lostSeersLenses
+- benthicBloom

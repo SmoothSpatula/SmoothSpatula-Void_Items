@@ -15,6 +15,41 @@ buff.show_icon = false
 buff.is_timed  = false
 buff.is_debuff = false
 
+-- ===== Network ===== --
+
+local packetSaferTakeDamage = Packet.new("packetSaferTakeDamage")
+
+local function remove_buff(actor)
+    actor:buff_remove(buff)
+    sound:play_synced(actor.x, actor.y, 0.85)
+
+    local actor_data = Instance.get_data(actor, "saferSpaces")
+    actor_data.state = 2
+
+    local item = Item.find("saferSpaces")
+    local cd = 15 * (0.9 ^ (actor:item_count(item) - 1)) * 60
+    print(cd)
+    Alarm.add(cd, function()
+        if not Instance.exists(actor) then return end
+        actor:buff_apply(buff, 1)
+    end)
+
+    if Net.online and Net.host then
+		packetSaferTakeDamage:send_to_all(actor)
+	end
+end
+
+local SaferTakeDamage_serializer = function(buffer, actor)
+	buffer:write_instance(actor)
+end
+local SaferTakeDamage_deserializer = function(buffer)
+	local actor = buffer:read_instance()
+	if not Instance.exists(actor) then return end
+	remove_buff(actor)
+end
+
+packetSaferTakeDamage:set_serializers(SaferTakeDamage_serializer, SaferTakeDamage_deserializer)
+
 
 -- ===== Callbacks =====
 
@@ -37,18 +72,7 @@ DamageDodge.add(function(api, current_dodge)
     local stack = actor:buff_count(buff)
     if stack <= 0 then return end
 
-    actor:buff_remove(buff)
-    sound:play_synced(actor.x, actor.y, 0.85)
-
-    local actor_data = Instance.get_data(actor, "saferSpaces")
-    actor_data.state = 2
-
-    local item = Item.find("saferSpaces")
-    local cd = 15 * (0.9 ^ (actor:item_count(item) - 1)) * 60
-    Alarm.add(cd, function()
-        if not Instance.exists(actor) then return end
-        actor:buff_apply(buff, 1)
-    end)
+    remove_buff(actor)
 
     return DamageDodge.BLOCKED
 end)
