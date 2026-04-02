@@ -129,7 +129,6 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     -- play animation and sound wooo
 
     setup_instance(inst, target, attacker)
-        --local inst_data = Instance.get_data(inst)
 end)
 
 Callback.add(object.on_step, function(inst)

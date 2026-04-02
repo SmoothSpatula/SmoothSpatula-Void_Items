@@ -72,41 +72,55 @@ local damage_color = Color(0xd183d7)
 
 -- ===== Callbacks =====
 
-local function shrimp_pos_angle_speed(attacker, target) 
+local function shrimp_pos_angle_speed(attacker, target, angle) 
     local dx = target.x - attacker.x
     local dy = target.y - attacker.y
-    angle = (math.deg(math.atan(dy, dx)) + (math.random(0,1)*2-1) * math.random(60, 90)) % 360
-    
+
     local rad = math.rad(angle)
     local x = attacker.x + math.cos(rad) * start_distance
     local y = attacker.y - math.sin(rad) * start_distance
 
     speed = base_speed + (math.log(math.sqrt(dx*dx + dy*dy) + 1))^1.1 * 2 -- logfactor calculation
 
-    return x, y, angle, speed
+    return x, y, speed
+end
+
+local function setup_instance(inst)
+    local inst_data = Instance.get_data(inst)
+    local attacker, target, damage, angle = inst_data.parent, inst_data.target, inst_data.damage, inst_data.angle
+
+    local shrimp_x, shrimp_y, shrimp_speed = shrimp_pos_angle_speed(attacker, target, angle)
+    inst.speed = shrimp_speed
+    inst.direction = angle
+    inst_data.duration = 480
+    inst_data.last_x = shrimp_x - math.cos(math.rad(angle)) * 20 
+    inst_data.last_y = shrimp_y + math.sin(math.rad(angle)) * 20
+    inst_data.tx = target.x
+    inst_data.ty = target.y
+    inst_data.max_turn_radius = max_turn_radius
 end
 
 Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local stack = attacker:item_count(item)
     if stack <= 0 or attacker.shield <= 0 then return end
     
-    local shrimp_x, shrimp_y, shrimp_angle, shrimp_speed = shrimp_pos_angle_speed(attacker, target)
+    -- calculate the angle on host
+    local dx = target.x - attacker.x
+    local dy = target.y - attacker.y
+    local shrimp_angle = (math.deg(math.atan(dy, dx)) + (math.random(0,1)*2-1) * math.random(60, 90)) % 360
+    local shrimp_x, shrimp_y, shrimp_speed = shrimp_pos_angle_speed(attacker, target, shrimp_angle)
 
     shrimp_inst = Instance.create(shrimp_x, shrimp_y, object)
     local inst_data = Instance.get_data(shrimp_inst)
-    shrimp_inst.direction = shrimp_angle
-    shrimp_inst.speed = shrimp_speed
-    inst_data.target = target
-    inst_data.duration = 480
+
+    -- to send to client
     inst_data.parent = attacker
     inst_data.damage = hit_info.attack_info.damage * stack * 0.4
-    inst_data.last_x = shrimp_x - math.cos(math.rad(shrimp_angle)) * 20 
-    inst_data.last_y = shrimp_y + math.sin(math.rad(shrimp_angle)) * 20
-    inst_data.tx = target.x
-    inst_data.ty = target.y
-    inst_data.max_turn_radius = max_turn_radius
+    inst_data.angle = shrimp_angle
+    inst_data.target = target
 
-    -- play animation and sound wooo
+    setup_instance(shrimp_inst)
+
     sound:play_synced(shrimp_x, shrimp_y, 0.5)
 end)
 
@@ -118,7 +132,6 @@ RecalculateStats.add(function(actor, api)
     -- Add stats
     api.maxshield_add_from_maxhp(0.1)
 end)
-
 
 Callback.add(object.on_step, function(inst)
     local inst_data = Instance.get_data(inst)
@@ -152,6 +165,7 @@ Callback.add(object.on_step, function(inst)
         if Instance.exists(inst_data.target) then
             local attack_info = inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false).attack_info
             attack_info:use_raw_damage()
+
             attack_info.damage_color = damage_color
             if Util.bool(attack_info.critical) then attack_info:set_critical(false) end
             
@@ -173,7 +187,31 @@ Callback.add(object.on_step, function(inst)
     if inst_data.duration < 0 then
         inst:destroy()
     end
+    --inst:destroy()
 end)
+
+Callback.add(object.on_create, function(inst)
+	inst:instance_sync()
+end)
+
+-- ===== Networking =====
+local serializer = function(inst, buffer)
+	buffer:write_instance(Instance.get_data(inst).parent)
+	buffer:write_instance(Instance.get_data(inst).target)
+    buffer:write_float(Instance.get_data(inst).damage)
+    buffer:write_float(Instance.get_data(inst).angle)
+end
+
+local deserializer = function(inst, buffer)
+	Instance.get_data(inst).parent = buffer:read_instance()
+	Instance.get_data(inst).target = buffer:read_instance()
+    Instance.get_data(inst).damage = buffer:read_float()
+    Instance.get_data(inst).angle = buffer:read_float()
+
+    setup_instance(inst)
+end
+
+Object.add_serializers(object, serializer, deserializer)
 
 -- ===== Additional =====
 

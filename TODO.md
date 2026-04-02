@@ -8,9 +8,9 @@
 
 ### net implementation status
 - voidsentFlame -> good
-- polylute
+- polylute -> good
 - saferSpaces -> implemented, but alarm is bugged
-- plasmaShrimp
+- plasmaShrimp -> good
 - pluripotentLarva -> implemented
 - weepingFungus -> good
 - lysateCell
