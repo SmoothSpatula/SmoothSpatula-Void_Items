@@ -86,16 +86,12 @@ function generate_curve_points(radius, curvature, steps, size_x, size_y)
     return points
 end
 
-Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
-    local count = attacker:item_count(item)
-    if count <= 0 or math.random(1, 100) > 20 then return end
-
-    local actual_nb = math.min(count*3, 15) -- cap it or it will get too busy imo
-    local inst = Instance.create(target.x, target.y, object)
+function setup_instance(inst)
     local inst_data = Instance.get_data(inst)
+    local actual_nb = math.min(inst_data.count*3, 15) -- cap it or it will get too busy imo
+    local target = inst_data.target
     inst_data.surface = -1
     inst_data.duration = 25
-
 
     local size_x = gm.sprite_get_width(target.sprite_index)
     local size_y = gm.sprite_get_height(target.sprite_index)
@@ -105,20 +101,40 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     for i=1, actual_nb do
         all_pts[i] = generate_curve_points(15,2,12, size_x, size_y)
     end
-    inst_data.damage = hit_info.attack_info.damage * 0.5 * count
+    
     inst_data.all_pts = all_pts
-    inst_data.target = target
-    inst_data.parent = attacker
     inst_data.angle = {}
     for i = 0, 4 do
         inst_data.angle[i*2+1] = math.cos(math.random() * 6.242) * 4
         inst_data.angle[i*2+2] = math.sin(math.random() * 6.242) * 4
     end
+
+end
+
+Callback.add(object.on_create, function(inst)
+	inst:instance_sync()
+end)
+
+Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
+    local count = attacker:item_count(item)
+    if count <= 0 or math.random(1, 100) > 100 then return end -- change this back to 20
+
+    local inst = Instance.create(target.x, target.y, object)
+    local inst_data = Instance.get_data(inst)
+
+    inst_data.damage = hit_info.attack_info.damage * 0.5 * count
+    inst_data.target = target
+    inst_data.parent = attacker
+    inst_data.count = count
     -- play animation and sound wooo
+
+    setup_instance(inst, target, attacker)
+        --local inst_data = Instance.get_data(inst)
 end)
 
 Callback.add(object.on_step, function(inst)
     local inst_data = Instance.get_data(inst)
+
     inst_data.duration = inst_data.duration - 1
     if inst_data.duration < 0 then
         if Util.bool(gm.surface_exists(inst_data.surface)) then
@@ -142,7 +158,6 @@ Callback.add(object.on_step, function(inst)
 
         inst:destroy()
     end
-
 end)
 
 -- duration is 25/2 frames
@@ -158,6 +173,7 @@ Callback.add(object.ON_DRAW, function(inst)
     local inst_data = Instance.get_data(inst)
     local size_x = inst_data.size_x
     local size_y = inst_data.size_y
+    local all_pts = inst_data.all_pts
 
     if not Util.bool(gm.surface_exists(inst_data.surface)) then
         inst_data.surface = gm.surface_create(size_x*2, size_y*2)
@@ -166,17 +182,16 @@ Callback.add(object.ON_DRAW, function(inst)
         gm.draw_clear_alpha(Color.BLACK,0)
         gm.draw_set_color(Color.WHITE)
         
-        local i = 12 -  math.floor(inst_data.duration/2)
-        for j=1, #inst_data.all_pts do
-            local pts = inst_data.all_pts[j]
-            gm.draw_set_color(Color.WHITE)
-
-            if i > 1 then 
+        local i = math.min(math.max(12 -  math.floor(inst_data.duration/2), 1), 12)
+        for j=1, #all_pts do
+            local pts = all_pts[j]
+            
+            if i > 1 then
                 gm.draw_set_color(Color.WHITE)
                 gm.draw_line(pts[i-1].x + size_x, pts[i-1].y + size_y, pts[i].x+ size_x, pts[i].y + size_y)
             end
             gm.draw_set_color(Color.WHITE)
-            gm.draw_line(pts[i].x + size_x, pts[i].y + size_y, pts[i + 1].x+ size_x, pts[i + 1].y + size_y)
+            gm.draw_line(pts[i].x + size_x, pts[i].y + size_y, pts[i + 1].x+ size_x, pts[i + 1].y + size_y) -- why does this bug????
             if i < 12 then
                 gm.draw_set_color(Color.PURPLE)
                 gm.draw_line(pts[i+1].x + size_x, pts[i+1].y + size_y, pts[i + 2].x+ size_x, pts[i + 2].y + size_y)
@@ -187,6 +202,7 @@ Callback.add(object.ON_DRAW, function(inst)
                 gm.draw_circle(pts[1].x + size_x, pts[1].y + size_y, 4, false)
                 gm.draw_set_color(Color.BLACK)
                 gm.draw_circle(pts[1].x + size_x, pts[1].y + size_y, 3, false)
+            
             elseif i < 7 then -- both circles
                 gm.draw_set_color(Color.FUCHSIA)
                 gm.draw_circle(pts[1].x + size_x, pts[1].y + size_y, 4, false)
@@ -216,6 +232,25 @@ Callback.add(object.ON_DRAW, function(inst)
         1, 1, 
         0, Color.WHITE, 1)
 end)
+
+-- ===== Networking =====
+local serializer = function(inst, buffer)
+	buffer:write_instance(Instance.get_data(inst).parent)
+	buffer:write_instance(Instance.get_data(inst).target)
+    buffer:write_float(Instance.get_data(inst).damage)
+    buffer:write_float(Instance.get_data(inst).count)
+end
+
+local deserializer = function(inst, buffer)
+	Instance.get_data(inst).parent = buffer:read_instance()
+	Instance.get_data(inst).target = buffer:read_instance()
+    Instance.get_data(inst).damage = buffer:read_float()
+    Instance.get_data(inst).count = buffer:read_float()
+
+    setup_instance(inst)
+end
+
+Object.add_serializers(object, serializer, deserializer)
 
 -- ===== Additional =====
 

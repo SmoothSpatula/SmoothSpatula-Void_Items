@@ -7,9 +7,9 @@
 
 
 ### net implementation status
-- voidsentFlame
+- voidsentFlame -> good
 - polylute
-- saferSpaces -> works, but alarm is bugged
+- saferSpaces -> implemented, but alarm is bugged
 - plasmaShrimp
 - pluripotentLarva -> implemented
 - weepingFungus -> good
