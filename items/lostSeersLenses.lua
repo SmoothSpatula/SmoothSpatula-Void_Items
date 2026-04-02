@@ -39,11 +39,11 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     
     if math.random(1, 200) <= attacker:item_count(item) then
         local inst = Instance.create(target.x, target.y, object)
-        local inst_data = Instance.get_data(inst)
-        inst_data.surface = -1
-        inst_data.duration = 40
-        inst_data.size_x = gm.sprite_get_width(target.sprite_index)
-        inst_data.size_y = gm.sprite_get_height(target.sprite_index)
+        -- local inst_data = Instance.get_data(inst)
+        --inst_data.surface = -1
+        --inst_data.duration = 40
+        --inst_data.size_x = gm.sprite_get_width(target.sprite_index)
+        --inst_data.size_y = gm.sprite_get_height(target.sprite_index)
 
         Alarm.add(1, function(target) target:kill() end, target)
 
@@ -62,7 +62,6 @@ Callback.add(object.on_step, function(inst)
     if inst_data.duration == 15 then
         
         for i=1, 20 do
-            --print()
             particleSeer:set_speed(1, 3, 0, 0)
             particleSeer:set_direction(0, 360, 0, 5)
             particleSeer:create(inst.x, inst.y, 1)
@@ -77,6 +76,13 @@ Callback.add(object.on_step, function(inst)
     
 
 end)
+
+Callback.add(object.on_create, function(inst)
+    local inst_data = Instance.get_data(inst)
+    inst_data.duration = 40
+	inst:instance_sync()
+end)
+
 
 -- ===== Additional =====
 

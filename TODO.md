@@ -13,7 +13,7 @@
 - plasmaShrimp -> good
 - pluripotentLarva -> implemented
 - weepingFungus -> good
-- lysateCell
+- lysateCell -> good
 - needletick
-- lostSeersLenses
-- benthicBloom
+- lostSeersLenses -> good
+- benthicBloom -> good
