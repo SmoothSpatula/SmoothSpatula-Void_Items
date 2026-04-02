@@ -66,8 +66,10 @@ Callback.add(obj.on_create, function(inst)
     inst.cost_type = 2  -- hp
 
     -- Set prompt text
-    -- inst.translation_key = "interactable.voidCradle"
-    -- inst.text = gm.translate(inst.translation_key..".text")
+    inst.translation_key = "interactable.voidCradle"
+    inst.text = gm.translate(inst.translation_key..".text")
+    inst.text_offset_y = 0
+    inst.text_offset_x = -20
 end)
 
 Hook.add_post(gm.constants.interactable_pay_cost, function(self, other, result, args)

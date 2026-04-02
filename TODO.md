@@ -2,18 +2,18 @@
 - make voidsent flame more impactful
 - add cradle or an indication in the mod icon
 - make items spawned from cradle not pickupable until pressing a key
-- add cradle display cost
+- add cradle display cost -> done
 - plasma shrimp recolor shield ui
 
 
 ### net implementation status
-- voidsentFlame -> good
-- polylute -> good
+- voidsentFlame -> good by default
+- polylute -> implemented
 - saferSpaces -> implemented, but alarm is bugged
-- plasmaShrimp -> good
+- plasmaShrimp -> implemented
 - pluripotentLarva -> implemented
-- weepingFungus -> good
-- lysateCell -> good
-- needletick
-- lostSeersLenses -> good
-- benthicBloom -> good
+- weepingFungus -> good by default
+- lysateCell -> good by default
+- needletick -> good by default
+- lostSeersLenses -> implemented
+- benthicBloom -> good by default

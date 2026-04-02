@@ -89,5 +89,10 @@ return {
             date        = "",
             story       = "\"Luck? Who needs luck, in a place like this. \n\nTo survive here, you'd need more than just luck. You need intuition. Instinct. The right tools. Power. \n\nI know you're scared. And I am too. But if there's anything this hell hole has taught me... \n\nWe make our own luck.\" \n\n- Signal Echoes, UES Contact Light",
         },
+    },
+    interactable = {
+        voidCradle = {
+            text = "Feed it, and it may offer something in return..."
+        }
     }
 }
