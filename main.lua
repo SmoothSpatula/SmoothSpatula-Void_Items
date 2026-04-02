@@ -3,6 +3,7 @@
 mods["LuaENVY-ENVY"].auto()
 mods["ReturnsAPI-ReturnsAPI"].auto{
     namespace = "vi",
+    mp        = true
 }
 
 PATH = _ENV["!plugins_mod_folder_path"]
