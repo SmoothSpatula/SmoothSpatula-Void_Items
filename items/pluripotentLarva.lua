@@ -136,6 +136,7 @@ gm.post_code_execute("gml_Object_oInit_Draw_73", function()
         end
 
         gm.surface_set_target(my_surface)
+        gm.gpu_set_blendenable(false)
         gm.shader_set(shd_void_explosion)
         gm.shader_set_uniform_f_array(_uni_uvs, flat)
         gm.shader_set_uniform_i(_uni_nb, count)
@@ -143,6 +144,7 @@ gm.post_code_execute("gml_Object_oInit_Draw_73", function()
         gm.shader_reset()
         gm.surface_reset_target()
         gm.surface_copy(application_surface, 0, 0, my_surface)
+        gm.gpu_set_blendenable(true)
     end
 end)
 

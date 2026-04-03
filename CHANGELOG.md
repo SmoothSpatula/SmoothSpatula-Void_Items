@@ -1,3 +1,7 @@
+### v0.1.4
+- PluripotentLarva Shader : set gpu_set_blendenable to avoid a black screen
+- Void Cradle : Added a ping sprite and ping name language entry
+
 ### v0.1.3
 - ReturnsApi multiplayer tag set to true
 
