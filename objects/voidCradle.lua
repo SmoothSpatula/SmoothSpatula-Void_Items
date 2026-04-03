@@ -1,6 +1,7 @@
 -- Void Cradle
 
 local spr_cradle = Sprite.new("voidCradle", "~/assets/sprites/objects/voidCradle.png", 10, 16, 36)
+local spr_cradle_ping = Sprite.new("voidCradlePinged", "~/assets/sprites/objects/voidCradlePing.png", 1, 16, 20)
 
 local spawn_cost    = 65
 local spawn_weight  = 10
@@ -70,6 +71,10 @@ Callback.add(obj.on_create, function(inst)
     inst.text = gm.translate(inst.translation_key..".text")
     inst.text_offset_y = 0
     inst.text_offset_x = -20
+
+    -- Set ping sprite
+    inst.sprite_ping = spr_cradle_ping
+    inst.name_text = gm.translate(inst.translation_key..".name")
 end)
 
 Hook.add_post(gm.constants.interactable_pay_cost, function(self, other, result, args)
