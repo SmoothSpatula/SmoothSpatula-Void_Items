@@ -92,7 +92,8 @@ return {
     },
     interactable = {
         voidCradle = {
-            text = "Feed it, and it may offer something in return..."
+            text = "Feed it, and it may offer something in return...",
+            name = "Void Cradle"
         }
     }
 }
