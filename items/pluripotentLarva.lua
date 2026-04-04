@@ -57,7 +57,8 @@ Hook.add_pre(gm.constants.actor_death, function(self, other, result, args)
     
     if self:item_count(item) <= 0 then return end
 
-    if self.hp <= 0 then 
+    if ((self.hp <= 0 and Net.host and self.actor_state_current_id ~= 1) 
+        or Util.bool(args[1].value)) and not self.dead then
         self:heal(self.maxhp) 
         self.invincible = 180 
         self:item_take(item)
