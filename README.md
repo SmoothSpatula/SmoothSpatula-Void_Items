@@ -3,6 +3,8 @@ Made in collaboration with Klehrik.
 
 Some things are still incomplete/need to be polished.  
 
+Tested in multiplayer.
+
 ---
 
 ### Installation Instructions

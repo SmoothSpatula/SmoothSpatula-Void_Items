@@ -1,3 +1,6 @@
+### v0.1.6
+- PlasmaShrimp : Pink shield color via dynamic hooks (could be unstable)
+
 ### v0.1.5
 - PluripotentLarva `actor_death` hook : death check now matches Dio's
 

@@ -1,8 +1,8 @@
 ﻿{
 	"name": "Void_Items",
-	"version_number": "0.1.5",
+	"version_number": "0.1.6",
 	"website_url": "https://github.com/SmoothSpatula/SmoothSpatula-Void_Items",
-	"description": "A rebalanced port of many items from Survivors of the Void. NOW IN MULTIPLAYER",
+	"description": "A rebalanced port of many items from Survivors of the Void.",
 	"dependencies": [
 		"ReturnOfModding-ReturnOfModding-1.1.19",
 		"ReturnsAPI-ReturnsAPI-0.1.54",
