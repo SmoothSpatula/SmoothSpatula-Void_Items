@@ -216,3 +216,64 @@ Object.add_serializers(object, serializer, deserializer)
 -- ===== Additional =====
 
 ItemLog.new_from_item(item)
+
+local ptr = memory.scan_pattern(
+    "48 8B 8D ? ? ? ? E8 ? ? ? ? EB ? 33 FF 48 BB 27 07 00 00 01 00 00 01"
+)
+memory.dynamic_hook_mid(
+    "draw_sprite_args",
+    {"[rsp+28h]", "r9"},
+    {"RValue**", "int"},
+    0,
+    ptr,
+    function(args)
+        local argv = args[1]
+        local argc = args[2]
+        if argc:get() == 8 then
+            for i = 0,8 do
+                local value = memory.resolve_pointer_to_type(args[1]:add(i*8):deref():get_address(), "RValue*").value
+                if value == 8421376 and Player.get_local():item_count(item) > 0 then
+                    memory.resolve_pointer_to_type(args[1]:add(i*8):deref():get_address(), "RValue*").value = 16711935
+                end
+            end
+        end
+    end
+)
+
+local ptr2 = memory.scan_pattern("E8 ? ? ? ? C7 44 24 ? ? ? ? ? BA 02 00 00 00 48 8D 4D ? E8 ? ? ? ? 84 C0 0F 84")
+
+memory.dynamic_hook_mid(
+    "draw_sprite_args",
+    {"[rsp+28h]", "r9"},
+    {"RValue**", "int"},
+    0,
+    ptr2,
+    function(args)
+        local argv = args[1]
+        local argc = args[2]
+        if argc:get() == 8 then
+            for i = 0,8 do
+                local value = memory.resolve_pointer_to_type(args[1]:add(i*8):deref():get_address(), "RValue*").value
+                if value == 8421376 and Player.get_local():item_count(item) > 0 then
+                    memory.resolve_pointer_to_type(args[1]:add(i*8):deref():get_address(), "RValue*").value = 16711935
+                end
+            end
+        end
+    end
+)
+
+-- print(memory.scan_pattern("48 8B 8D ? ? ? ? E8 ? ? ? ? EB ? 33 FF 48 BB 27 07 00 00 01 00 00 01"):add(-5629))
+-- print(memory.scan_pattern("E8 ? ? ? ? C7 44 24 ? ? ? ? ? BA 02 00 00 00 48 8D 4D ? E8 ? ? ? ? 84 C0 0F 84"))
+
+-- original text:00000001402C538B
+
+-- text:00000001402C562F
+-- text:00000001402C595A
+-- text:00000001402C3D8E 
+-- text:00000001402C3F89
+-- text:00000001402C417F
+-- text:00000001402C44CB
+-- text:00000001402C4775
+-- text:00000001402C4BD8
+-- text:00000001402C6626
+-- text:00000001402C620E
