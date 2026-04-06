@@ -1,3 +1,8 @@
+### v0.1.8
+- PlasmaShrimp : Fixed shield color hook crash, color change now happens individually for each player on the HUD
+- DisableAutoPickup : Added as a dependency to disable automatically picking up void items
+- Updated Readme
+
 ### v0.1.7
 - PlasmaShrimp : It was unstable, removing the dynamic hook for now
 
