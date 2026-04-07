@@ -7,7 +7,7 @@ Tested in multiplayer.
 
 With disableAutoPickup (included as a dependency), you can prevent your character from picking up Void Items automatically, even in multiplayer. The Settings are per client.
 
-![Mod Options](assets/sprites/readme/disablepickupmodoption.png)
+![Mod Options](https://github.com/SmoothSpatula/SmoothSpatula-DisableAutoPickup/blob/main/disablepickupmodoption.png?raw=true)
 
 ---
 
