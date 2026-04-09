@@ -162,7 +162,7 @@ Callback.add(object.on_step, function(inst)
     inst_data.last_y = inst.y
 
     if dist < 10 then
-        if Instance.exists(inst_data.target) then
+        if Instance.exists(inst_data.target) and Instance.exists(inst_data.parent) then
             local attack_info = inst_data.parent:fire_direct(inst_data.target, inst_data.damage, 0, inst_data.target.x, inst_data.target.y, nil, false).attack_info
             attack_info:use_raw_damage()
 
@@ -218,6 +218,8 @@ Object.add_serializers(object, serializer, deserializer)
 ItemLog.new_from_item(item)
 
 -- maybe shouldnt doesnt perhaps actually crash the game
+
+-- pink shield
 
 local ptr = memory.scan_pattern(
     "48 8B 8D ? ? ? ? E8 ? ? ? ? EB ? 33 FF 48 BB 27 07 00 00 01 00 00 01"

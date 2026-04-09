@@ -136,6 +136,11 @@ Callback.add(object.on_step, function(inst)
 
     inst_data.duration = inst_data.duration - 1
     if inst_data.duration < 0 then
+        if not Instance.exists(inst_data.parent) or not Instance.exists(inst_data.target) then
+            inst:destroy()
+            return
+        end
+
         if Util.bool(gm.surface_exists(inst_data.surface)) then
             gm.surface_free(inst_data.surface)
         end

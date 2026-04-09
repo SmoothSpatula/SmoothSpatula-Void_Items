@@ -1,12 +1,12 @@
 ﻿{
 	"name": "Void_Items",
-	"version_number": "0.1.8",
+	"version_number": "0.1.9",
 	"website_url": "https://github.com/SmoothSpatula/SmoothSpatula-Void_Items",
 	"description": "A rebalanced port of many items from Survivors of the Void.",
 	"dependencies": [
 		"ReturnOfModding-ReturnOfModding-1.1.19",
 		"ReturnsAPI-ReturnsAPI-0.1.54",
 		"LuaENVY-ENVY-1.2.0",
-		"SmoothSpatula-DisableAutoPickup-1.1.0"
+		"SmoothSpatula-DisableAutoPickup-1.1.1"
 	]
 }

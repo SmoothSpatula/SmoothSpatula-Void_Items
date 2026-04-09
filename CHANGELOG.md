@@ -1,3 +1,6 @@
+### v0.1.9
+- PlasmaShrimp and Polylute : added checks for instance before using fire_direct
+
 ### v0.1.8
 - PlasmaShrimp : Fixed shield color hook crash, color change now happens individually for each player on the HUD
 - DisableAutoPickup : Added as a dependency to disable automatically picking up void items
