@@ -50,7 +50,7 @@ Initialize.add_hotloadable(function()
 
     -- Corruption logic
     Callback.add(Callback.ON_PICKUP_COLLECTED, function(pickup, actor)
-        --Instance.wrap(pickup):print_variables()
+        if pickup.item_id == -1 then return end
         local item = Item.wrap(pickup.item_id)
         if item.namespace == "vi" then
             for i, v in pairs(corruptions) do

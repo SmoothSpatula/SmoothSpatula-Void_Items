@@ -1,3 +1,6 @@
+### v0.1.10
+- onPickupCollected callback : check for non item pickup
+
 ### v0.1.9
 - PlasmaShrimp and Polylute : added checks for instance before using fire_direct
 
