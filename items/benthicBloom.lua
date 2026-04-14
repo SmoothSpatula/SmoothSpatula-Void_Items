@@ -1,7 +1,4 @@
--- Ration (Used)
-
 local item = Item.new("benthicBloom")
-
 
 -- ===== Assets =====
 
@@ -41,9 +38,9 @@ Callback.add(Callback.ON_STAGE_START, function()
             local obj_id = pool_list:get(math.random(pool_list:size())-1)
             local item_del = Item.wrap(gm.object_to_item(obj_id))
             --check if actor has item
-            local item_count = actor:item_count(item_del)
+            local item_count = actor:item_count(item_del, Item.StackKind.NORMAL)
             if item_count > 0 then 
-                actor:item_take(item_del)
+                actor:item_take(item_del, 1, Item.StackKind.NORMAL)
                 if item_del.tier > 0 then
                     uncommon_nb = uncommon_nb + 1
                     local given_item, _ = LootPool.find("rare"):roll()

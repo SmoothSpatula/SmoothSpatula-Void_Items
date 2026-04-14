@@ -1,6 +1,6 @@
 ﻿{
 	"name": "Void_Items",
-	"version_number": "0.1.9",
+	"version_number": "0.1.10",
 	"website_url": "https://github.com/SmoothSpatula/SmoothSpatula-Void_Items",
 	"description": "A rebalanced port of many items from Survivors of the Void.",
 	"dependencies": [
