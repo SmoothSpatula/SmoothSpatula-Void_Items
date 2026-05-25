@@ -1,3 +1,6 @@
+### v0.1.11
+- PlasmaShrimp : Added null check to prevent midhook crash
+
 ### v0.1.10
 - onPickupCollected callback : check for non item pickup
 - benthicBloom : now using Item.StackKind.NORMAL every time

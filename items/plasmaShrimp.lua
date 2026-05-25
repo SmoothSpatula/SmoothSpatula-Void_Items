@@ -231,8 +231,11 @@ memory.dynamic_hook_mid(
     0,
     ptr,
     function(args)
-        if Instance.wrap(args[2]):item_count(item) > 0 then
-            memory.resolve_pointer_to_type(args[1]:add(6*8):deref():get_address(), "RValue*").value = 16711935
+        if args[2] then
+            local inst = Instance.wrap(args[2])
+            if inst and inst.id and inst:item_count(item) > 0 then
+                memory.resolve_pointer_to_type(args[1]:add(6*8):deref():get_address(), "RValue*").value = 16711935
+            end
         end
     end
 )
@@ -246,8 +249,11 @@ memory.dynamic_hook_mid(
     0,
     ptr2,
     function(args)
-        if Instance.wrap(args[2]):item_count(item) > 0 then
-            memory.resolve_pointer_to_type(args[1]:add(6*8):deref():get_address(), "RValue*").value = 16711935
+        if args[2] then
+            local inst = Instance.wrap(args[2])
+            if inst and inst.id and inst:item_count(item) > 0 then
+                memory.resolve_pointer_to_type(args[1]:add(6*8):deref():get_address(), "RValue*").value = 16711935
+            end
         end
     end
 )
