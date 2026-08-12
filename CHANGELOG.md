@@ -1,3 +1,6 @@
+### v0.1.12
+- Collapse : Fixed an bug where the buff would try to damage an invalid instance
+
 ### v0.1.11
 - PlasmaShrimp : Added null check to prevent midhook crash
 

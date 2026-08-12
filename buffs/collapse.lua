@@ -41,9 +41,13 @@ Callback.add(buff.on_remove, function(actor)
 
     local inst_data = Instance.get_data(actor)
     local damage = inst_data.collapse_count * 2.5
-    local attack_info = inst_data.attacker:fire_direct(actor, damage, 0, actor_x, actor_y, gm.constants.sSparks1, false).attack_info
-    attack_info.damage_color = COL_COLLAPSE_RED
 
+    if not inst_data.attacker then return end
+    local result = inst_data.attacker:fire_direct(actor, damage, 0, actor_x, actor_y, gm.constants.sSparks1, false)
+    if not result or not result.attack_info then 
+        log.warning("Void_Items - Collapse : failed to retrieve data attack_info from fire_direct \n")
+    return end
+    result.attack_info.damage_color = COL_COLLAPSE_RED
     local size = math.sqrt(gm.sprite_get_width(actor.sprite_index) *  gm.sprite_get_height(actor.sprite_index)) / 500
 
     -- small circle
