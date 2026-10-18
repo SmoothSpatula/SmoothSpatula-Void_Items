@@ -36,14 +36,14 @@ particleBig:set_blend(0)
 
 -- ===== Callbacks =====
 
-Callback.add(buff.on_remove, function(actor)
+Callback.add(buff.on_remove,  function(actor)
     local actor_x, actor_y = actor.x, actor.y
 
     local inst_data = Instance.get_data(actor)
-    local damage = inst_data.collapse_count * 2.5
+    local damage = actor:buff_count(buff) * 2.5
 
-    if not inst_data.attacker then return end
-    local result = inst_data.attacker:fire_direct(actor, damage, 0, actor_x, actor_y, gm.constants.sSparks1, false)
+    if not inst_data.collapse_attacker then return end
+    local result = inst_data.collapse_attacker:fire_direct(actor, damage, 0, actor_x, actor_y, gm.constants.sSparks1, false)
     if not result or not result.attack_info then 
         log.warning("Void_Items - Collapse : failed to retrieve data attack_info from fire_direct \n")
     return end

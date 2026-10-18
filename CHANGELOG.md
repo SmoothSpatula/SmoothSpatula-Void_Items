@@ -1,5 +1,8 @@
+### v0.1.13
+- Collapse : Fixed buggy calculation of buff count
+
 ### v0.1.12
-- Collapse : Fixed an bug where the buff would try to damage an invalid instance
+- Collapse : Fixed a bug where the buff would try to damage an invalid instance
 - PlasmaShrimp : Added more checks to prevent midhook crash
 
 ### v0.1.11

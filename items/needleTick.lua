@@ -21,16 +21,13 @@ Callback.add(Callback.ON_HIT_PROC, function(attacker, target, hit_info)
     local count = attacker:item_count(item)
     if count <= 0 then return end
     if math.random(1, 10) > count then return end
-    
-    if target:buff_count(buff) > 0 then 
+
+    if target:buff_count(buff) > 1 then 
         target:buff_apply(buff, gm.get_buff_time(target.value, buff.value), 1)
-        local inst_data = Instance.get_data(target)
-        inst_data.collapse_count = target:buff_count(buff)
     else
         target:buff_apply(buff, buff_time, 1)
         local inst_data = Instance.get_data(target)
-        inst_data.collapse_count = 1
-        inst_data.attacker = attacker
+        inst_data.collapse_attacker = attacker
     end
 end)
 
