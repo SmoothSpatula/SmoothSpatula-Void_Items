@@ -1,3 +1,10 @@
+### v0.1.14
+- Replaced some placeholder sprites with some made by the community
+    - Lost Seer's Lenses by **TangoKnight**
+    - Polylute by **Goatnorth**
+    - Pluripotent Larva by **Goatnorth**
+    - Voidsent Flame by **ENNWAY**
+
 ### v0.1.13
 - Collapse : Fixed buggy calculation of buff count
 
