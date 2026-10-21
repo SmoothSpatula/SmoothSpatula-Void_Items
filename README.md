@@ -14,6 +14,7 @@ With disableAutoPickup (included as a dependency), you can prevent your characte
 ### Special Thanks To
 * IDeathHD and especially hinyb for the shrimp color mid_hook
 * digbug and all the others on the discord who have given feedback
+* TangoKnight, Goatnorth and ENNWAY for the beautiful item sprites
 
 ### Installation Instructions
 Install through the Thunderstore client or r2modman [(more detailed instructions here if needed)](https://return-of-modding.github.io/ModdingWiki/Playing/Getting-Started/).  
